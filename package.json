@@ -2,13 +2,17 @@
   "name": "task-management-app",
   "version": "1.0.0",
   "description": "A simple web-based task management app",
-  "main": "index.js",
   "scripts": {
+    "start": "node server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ross Morran",
   "license": "ISC",
   "dependencies": {
     "express": "^4.16.4"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Ross117/task-management-app.git"
   }
 }
