@@ -22,5 +22,5 @@ exports.getAllTasks = () => {
       dbTasks.close;
     }
   });
-}
+};
   
