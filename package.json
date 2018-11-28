@@ -9,7 +9,8 @@
   "author": "Ross Morran",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.4"
+    "express": "^4.16.4",
+    "tedious": "^3.0.1"
   },
   "repository": {
     "type": "git",
