@@ -15,14 +15,5 @@ exports.dbConnection = () => {
 
   const connection = new Connection(config);
 
-  connection.on("connect", err => {
-    if (err) {
-      // need to add robust error handling
-      console.log(err);
-    } else {
-      console.log('connected');
-    }
-  });
-
   return connection;
 };
