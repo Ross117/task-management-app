@@ -1,3 +1,5 @@
+// need to set proxy server to backend?
+
 {
   "name": "client",
   "version": "0.1.0",

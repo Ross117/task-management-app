@@ -13,15 +13,6 @@ exports.getAllTasks = (res) => {
     }
   });
 
-  const dbTasks = dbConnection();
-
-  dbTasks.on('connect', err => {
-    if (err) {
-      console.log(err);
-    } else {
-      dbTasks.execSql(request)
-      dbTasks.close;
-    }
-  });
+  dbConnection(request);
 };
   
