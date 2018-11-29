@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "A simple web-based task management app",
   "scripts": {
-    "start": "node server/server.js",
+    "start": "nodemon server/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ross Morran",
@@ -15,5 +15,8 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/Ross117/task-management-app.git"
+  },
+  "devDependencies": {
+    "nodemon": "^1.18.7"
   }
 }

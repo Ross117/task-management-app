@@ -3,8 +3,6 @@ const app = express();
 const getAllTasks = require("./routes/getAllTasks.js").getAllTasks;
 const port = 3000;
 
-// install nodemon as a dev dependency?
-
 getAllTasks();
 
 app.get('/', (req, res) => res.send('Hello World'));
