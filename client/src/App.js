@@ -6,8 +6,10 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      error: null,
+      fetched: false,
       tasks: [],
-      error: null
+      
     };
   }
 
@@ -22,20 +24,42 @@ class App extends Component {
     this.getAllTasks()
       .then(
         (res) => {
-        this.setState({ tasks: res });
+        this.setState({
+          fetched: true, 
+          tasks: res[0] 
+        });
       }, 
       (error) => {
         this.setState({
-          error
+          error,
+          fetched: true
         });
       }
     )
   }
 
   render() {
-    return (
-      <div></div>
-    );
+    if (this.state.fetched) {
+      const tasks = this.state.tasks;
+
+      return (
+        <div>
+          {tasks[0].value}
+          {tasks[1].value}
+          {tasks[2].value}
+          {tasks[3].value}
+          {tasks[4].value}
+          {tasks[5].value}
+          {tasks[6].value}
+        </div>
+      );
+    } else {
+      return (
+        <div>
+          Your tasks are loading...
+        </div>
+      );
+    }
   }
 }
 
