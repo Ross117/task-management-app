@@ -5,24 +5,24 @@ const deleteTask = require("./routes/deleteTask.js").deleteTask;
 const addTask = require("./routes/addTask.js").addTask;
 const amendTask = require("./routes/amendTask.js").amendTask;
 // || process.env.PORT?
-const port = 3000;
+const port = 8080;
 
 // need to work out error handling & responses to client
 
-app.get("/", (req, res) => {
+app.get("/allTasks", (req, res) => {
   getAllTasks(res);
 });
 
 // need to set taskID as request parameter
-app.delete("/", (req) => {
+app.delete("/deleteTask", (req) => {
   deleteTask(req);
 });
 
-app.post("/", (req) => {
+app.post("/addTask", (req) => {
   addTask(req);
 });
 
-app.put("/", (req) => {
+app.put("/amendTask", (req) => {
   amendTask(req);
 });
 
