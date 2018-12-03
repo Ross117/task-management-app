@@ -2,16 +2,13 @@ import React from "react";
 import "../css/Task.css";
 
 function Task(props) {
-  const title = props.task[2].value;
-  const desc = props.task[3].value;
-  const completed = props.task[4].value;
-  const scheduledDt = props.task[5].value;
-  const priority = props.task[6].value;
-
+  const { id, createdDt, title, desc, isCompleted, scheduledDt, priority } = props.task
+  
   return (
     <div>
-      <p>{title} {desc}</p>
-      <p>{completed} {scheduledDt} {priority}</p>
+      <h2>{title.value}</h2>
+      <p>{desc.value}</p>
+      <p>{isCompleted.value} {scheduledDt.value} {priority.value}</p>
     </div>
   );
 }
