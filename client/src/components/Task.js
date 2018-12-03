@@ -2,7 +2,7 @@ import React from "react";
 import "../css/Task.css";
 
 function Task(props) {
-  const { id, createdDt, title, desc, isCompleted, scheduledDt, priority } = props.task
+  const [ id, createdDt, title, desc, isCompleted, scheduledDt, priority ] = props.task;
   
   return (
     <div>
