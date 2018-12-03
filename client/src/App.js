@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import './css/App.css';
+import React, { Component } from "react";
+import Task from "./components/Task";
+import "./css/App.css";
 
 
 class App extends Component {
@@ -7,56 +8,59 @@ class App extends Component {
     super(props);
     this.state = {
       error: null,
-      fetched: false,
-      tasks: [],
-      
+      isFetched: false,
+      tasks: []
     };
+    this.getAllTasks = this.getAllTasks.bind(this);
   }
 
   getAllTasks = async () => {
     const res = await fetch("/allTasks");
-    const body = await res.json();
+    const data = await res.json();
 
-    return body;
+    return data;
   }
 
   componentDidMount() {
     this.getAllTasks()
       .then(
-        (res) => {
+        (data) => {
         this.setState({
-          fetched: true, 
-          tasks: res[0] 
+          isFetched: true, 
+          tasks: data
         });
       }, 
       (error) => {
         this.setState({
           error,
-          fetched: true
+          isFetched: true
         });
       }
     )
   }
 
   render() {
-    if (this.state.fetched) {
-      const tasks = this.state.tasks;
-
+    const { error, isFetched } = this.state;
+    if (error) {
       return (
         <div>
-          {tasks[0].value}
-          {tasks[1].value}
-          {tasks[2].value}
-          {tasks[3].value}
-          {tasks[4].value}
-          {tasks[5].value}
-          {tasks[6].value}
+          Sorry, something went wrong. Please try again.
+          {error.message}
         </div>
       );
-    } else {
+    } else if (!isFetched) {
       return (
         <div>
           Your tasks are loading...
+        </div>
+      );
+    } else {
+      const tasks = this.state.tasks.map( (task) => {
+        return <Task key={task[0].value} task={task}/>
+      });
+      return (
+        <div>
+          {tasks}
         </div>
       );
     }
@@ -64,3 +68,4 @@ class App extends Component {
 }
 
 export default App;
+
