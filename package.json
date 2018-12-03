@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "description": "A simple web-based task management app",
   "scripts": {
-    "start": "node server/server.js",
+    "server": "node apiServer/server.js",
+    "client": "cd client && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Ross Morran",
