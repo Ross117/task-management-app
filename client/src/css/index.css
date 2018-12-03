@@ -10,8 +10,12 @@ html {
 
 body {
   box-sizing: border-box;
-  font-family: 'Roboto', Verdana, sans-serif; }
+  font-family: 'Roboto', Verdana, sans-serif;
+  color: #343a40; }
 
 h1 {
   font-size: 3rem;
+  text-align: center; }
+
+p {
   text-align: center; }

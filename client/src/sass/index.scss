@@ -1,3 +1,5 @@
+$colour-grey-dark: rgb(52, 58, 64);
+
 *,
 *::after,
 *::before {
@@ -13,6 +15,7 @@ html {
 body {
   box-sizing: border-box;
   font-family: 'Roboto', Verdana, sans-serif;
+  color: $colour-grey-dark;
 }
 
 h1 {
