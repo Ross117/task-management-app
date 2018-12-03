@@ -43,25 +43,25 @@ class App extends Component {
     const { error, isFetched } = this.state;
     if (error) {
       return (
-        <div>
-          Sorry, something went wrong. Please try again.
-          {error.message}
-        </div>
+        <section>
+          <p>Sorry, something went wrong. Please try again.</p>
+          <p>{error.message}</p>
+        </section>
       );
     } else if (!isFetched) {
       return (
-        <div>
-          Your tasks are loading...
-        </div>
+        <section>
+          <p>Your tasks are loading...</p>
+        </section>
       );
     } else {
       const tasks = this.state.tasks.map( (task) => {
         return <Task key={task[0].value} task={task}/>
       });
       return (
-        <div>
+        <section className="tasksContainer">
           {tasks}
-        </div>
+        </section>
       );
     }
   }
