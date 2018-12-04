@@ -22,7 +22,7 @@ app.post("/addTask", (req) => {
   addTask(req);
 });
 
-app.put("/amendTask", (req) => {
+app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
   amendTask(req);
 });
 

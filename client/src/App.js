@@ -12,6 +12,7 @@ class App extends Component {
       tasks: []
     };
     this.getAllTasks = this.getAllTasks.bind(this);
+    this.postTaskUpdate = this.postTaskUpdate.bind(this);
     this.updateTask = this.updateTask.bind(this);
   }
 
@@ -21,9 +22,48 @@ class App extends Component {
     return data;
   }
 
-  updateTask = async (e) => {
-    console.log(e);
+  postTaskUpdate = async () => {
+    // const res = await fetch("/amendTask/{taskID}/field/{fieldToUpdate}/value/{newValue}");
+    return;
   }
+
+  updateTask(e) {
+    e.preventDefault();
+
+    const taskID = Number(e.target.parentNode.id);
+    const fieldToUpdate = e.target.name;
+    let updateValue;
+
+    if (fieldToUpdate === "task_completed") {
+      updateValue = (e.target.checked ? true : false);
+    } else {
+      updateValue = e.target.value;
+    }
+    
+    const updatedState = this.state.tasks.map( (task) => {
+      if (task[0].value === taskID) {
+        const updatedTask = task.map( (field) => {
+          // made a deep copy of the field obj
+          if (field.metadata.colName === fieldToUpdate) {
+            const fieldCopy = JSON.parse(JSON.stringify(field));
+            fieldCopy.value = updateValue;
+            return fieldCopy;
+          } else {
+            return field;
+          }
+        });
+        return updatedTask;
+      } else {
+        return task;
+      }
+    });
+
+    this.setState({tasks: updatedState});
+     
+    this.postTaskUpdate();
+  }
+
+  
 
   componentDidMount() {
     this.getAllTasks()
@@ -60,7 +100,7 @@ class App extends Component {
       );
     } else {
       const tasks = this.state.tasks.map( (task) => {
-        return <Task key={task[0].value} task={task} handleUpdate={this.updateTask}/>
+        return <Task key={task[0].value} task={task} updateTask={this.updateTask}/>
       });
       return (
         <section className="tasksContainer">
