@@ -12,13 +12,17 @@ class App extends Component {
       tasks: []
     };
     this.getAllTasks = this.getAllTasks.bind(this);
+    this.updateTask = this.updateTask.bind(this);
   }
 
   getAllTasks = async () => {
     const res = await fetch("/allTasks");
     const data = await res.json();
-
     return data;
+  }
+
+  updateTask = async (e) => {
+    console.log(e);
   }
 
   componentDidMount() {
@@ -56,7 +60,7 @@ class App extends Component {
       );
     } else {
       const tasks = this.state.tasks.map( (task) => {
-        return <Task key={task[0].value} task={task}/>
+        return <Task key={task[0].value} task={task} handleUpdate={this.updateTask}/>
       });
       return (
         <section className="tasksContainer">

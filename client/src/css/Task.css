@@ -6,9 +6,17 @@
   padding: 1rem;
   border: 0.2rem solid #f2f2f2;
   box-shadow: -5px 5px 8px 0 #C1CCC6; }
+  .task input {
+    display: block; }
   .task .task__title {
-    font-size: 2rem; }
-  .task .task__isCompleted {
+    font-size: 2rem;
+    border: none;
+    width: 80%; }
+  .task .task__desc {
+    text-align: left;
+    padding-top: 1.5rem;
+    border: none; }
+  .task .task__completed {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -16,7 +24,8 @@
     width: 2rem; }
   .task .task__priority {
     position: absolute;
-    right: 1rem; }
-  .task p {
-    text-align: left;
-    padding-top: 1.5rem; }
+    right: 1rem;
+    bottom: 1rem;
+    border: none; }
+  .task .task__scheduledDt {
+    border: none; }

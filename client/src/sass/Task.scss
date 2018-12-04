@@ -10,11 +10,23 @@ $colour-light-grey: #C1CCC6;
   border: 0.2rem solid $colour-cream;
   box-shadow: -5px 5px 8px 0 $colour-light-grey;
 
-  .task__title {
-    font-size: 2rem;
+  input {
+    display: block;
   }
 
-  .task__isCompleted {
+  .task__title {
+    font-size: 2rem;
+    border: none;
+    width: 80%;
+  }
+
+  .task__desc {
+    text-align: left;
+    padding-top: 1.5rem;
+    border: none;
+  }
+
+  .task__completed {
     position: absolute;
     top: 1rem;
     right: 1rem;
@@ -25,11 +37,12 @@ $colour-light-grey: #C1CCC6;
   .task__priority {
     position: absolute;
     right: 1rem;
+    bottom: 1rem;
+    border: none;
   }
 
-  p {
-    text-align: left;
-    padding-top: 1.5rem;
+  .task__scheduledDt {
+    border: none;
   }
 }
 
