@@ -28,16 +28,11 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
-    // ensure title field is not null
     if(fieldToUpdate === "task_title" && updateValue === "") return;
 
     // possible to check if update represents an actual change?
 
-    if (fieldToUpdate === "task_completed") {
-      updateValue = (e.target.checked ? 1 : 0);
-    } else {
-      updateValue = e.target.value;
-    }
+    updateValue = (fieldToUpdate === "task_completed" ? (e.target.checked ? 1 : 0) : e.target.value);
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: 'PUT'
@@ -47,37 +42,30 @@ class App extends Component {
   updateTask(e) {
     const taskID = Number(e.target.parentNode.id);
     const fieldToUpdate = e.target.name;
-    let callPutTaskUpdate = false;
     let updateValue;
+     
+    updateValue = (fieldToUpdate === "task_completed" ? (e.target.checked ? 1 : 0) : e.target.value);
 
-    if (fieldToUpdate === "task_completed") {
-      updateValue = (e.target.checked ? 1 : 0);
-      callPutTaskUpdate = true;
-    } else {
-      updateValue = e.target.value;
-    }
+    const updateTaskfield = (field) => {
+      if (field.metadata.colName === fieldToUpdate) {
+        // made a deep copy of the field obj
+        const fieldCopy = JSON.parse(JSON.stringify(field));
+        fieldCopy.value = updateValue;
+        return fieldCopy;
+      } else {
+        return field;
+      }
+    };
     
     const updatedTaskState = this.state.tasks.map( (task) => {
       if (task[0].value === taskID) {
-        const updatedTask = task.map( (field) => {
-          // made a deep copy of the field obj
-          if (field.metadata.colName === fieldToUpdate) {
-            const fieldCopy = JSON.parse(JSON.stringify(field));
-            fieldCopy.value = updateValue;
-            return fieldCopy;
-          } else {
-            return field;
-          }
-        });
-        return updatedTask;
+        return task.map(updateTaskfield);
       } else {
         return task;
       }
     });
 
     this.setState({tasks: updatedTaskState});
-
-    if (callPutTaskUpdate) this.putTaskUpdate(e);
   }
 
   componentDidMount() {
