@@ -7,7 +7,7 @@ function Task(props) {
   
   // need to made sure user can't set required fields to null - js form validation
 
-  // need to test db field limits for task title & task desc fields
+  // need to test db field limits for task title & task desc fields?
   
   // include save button?
 

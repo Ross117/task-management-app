@@ -11,15 +11,14 @@ const config = {
   }
 };
 
-exports.dbConnection = (request) => {
-
+exports.dbConnection = request => {
   const connection = new Connection(config);
-  
-  connection.on('connect', err => {
+
+  connection.on("connect", err => {
     if (err) {
       console.log(err);
     } else {
-      connection.execSql(request)
+      connection.execSql(request);
       connection.close;
     }
   });

@@ -1,7 +1,6 @@
 const express = require("express");
 const app = express();
 const getAllTasks = require("./routes/getAllTasks.js").getAllTasks;
-const deleteTask = require("./routes/deleteTask.js").deleteTask;
 const addTask = require("./routes/addTask.js").addTask;
 const amendTask = require("./routes/amendTask.js").amendTask;
 // || process.env.PORT?
@@ -13,16 +12,11 @@ app.get("/allTasks", (req, res) => {
   getAllTasks(res);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
+app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", req => {
   amendTask(req);
 });
 
-// need to set taskID as request parameter
-app.delete("/deleteTask", (req) => {
-  deleteTask(req);
-});
-
-app.post("/addTask", (req) => {
+app.post("/addTask", req => {
   addTask(req);
 });
 

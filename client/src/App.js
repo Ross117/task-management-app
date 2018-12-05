@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import Task from "./components/Task";
 import "./css/App.css";
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -12,6 +11,7 @@ class App extends Component {
       tasks: [],
       addTask: false
     };
+    
     this.getAllTasks = this.getAllTasks.bind(this);
     this.putTaskUpdate = this.putTaskUpdate.bind(this);
     this.updateTask = this.updateTask.bind(this);
