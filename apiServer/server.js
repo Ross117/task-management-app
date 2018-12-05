@@ -13,6 +13,10 @@ app.get("/allTasks", (req, res) => {
   getAllTasks(res);
 });
 
+app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
+  amendTask(req);
+});
+
 // need to set taskID as request parameter
 app.delete("/deleteTask", (req) => {
   deleteTask(req);
@@ -22,8 +26,4 @@ app.post("/addTask", (req) => {
   addTask(req);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
-  amendTask(req);
-});
-
-app.listen(port, () => console.log(`Example app listening on port ${port}!`));
+app.listen(port, () => console.log(`API server listening on port ${port}!`));

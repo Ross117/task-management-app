@@ -9,10 +9,11 @@ class App extends Component {
     this.state = {
       error: null,
       isFetched: false,
-      tasks: []
+      tasks: [],
+      addTask: false
     };
     this.getAllTasks = this.getAllTasks.bind(this);
-    this.postTaskUpdate = this.postTaskUpdate.bind(this);
+    this.putTaskUpdate = this.putTaskUpdate.bind(this);
     this.updateTask = this.updateTask.bind(this);
   }
 
@@ -22,25 +23,41 @@ class App extends Component {
     return data;
   }
 
-  postTaskUpdate = async () => {
-    // const res = await fetch("/amendTask/{taskID}/field/{fieldToUpdate}/value/{newValue}");
-    return;
-  }
-
-  updateTask(e) {
-    e.preventDefault();
-
+  putTaskUpdate(e) {
     const taskID = Number(e.target.parentNode.id);
     const fieldToUpdate = e.target.name;
     let updateValue;
 
+    // ensure title field is not null
+    if(fieldToUpdate === "task_title" && updateValue === "") return;
+
+    // possible to check if update represents an actual change?
+
     if (fieldToUpdate === "task_completed") {
-      updateValue = (e.target.checked ? true : false);
+      updateValue = (e.target.checked ? 1 : 0);
+    } else {
+      updateValue = e.target.value;
+    }
+
+    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
+      method: 'PUT'
+    });
+  }
+
+  updateTask(e) {
+    const taskID = Number(e.target.parentNode.id);
+    const fieldToUpdate = e.target.name;
+    let callPutTaskUpdate = false;
+    let updateValue;
+
+    if (fieldToUpdate === "task_completed") {
+      updateValue = (e.target.checked ? 1 : 0);
+      callPutTaskUpdate = true;
     } else {
       updateValue = e.target.value;
     }
     
-    const updatedState = this.state.tasks.map( (task) => {
+    const updatedTaskState = this.state.tasks.map( (task) => {
       if (task[0].value === taskID) {
         const updatedTask = task.map( (field) => {
           // made a deep copy of the field obj
@@ -58,12 +75,10 @@ class App extends Component {
       }
     });
 
-    this.setState({tasks: updatedState});
-     
-    this.postTaskUpdate();
-  }
+    this.setState({tasks: updatedTaskState});
 
-  
+    if (callPutTaskUpdate) this.putTaskUpdate(e);
+  }
 
   componentDidMount() {
     this.getAllTasks()
@@ -86,10 +101,10 @@ class App extends Component {
   render() {
     const { error, isFetched } = this.state;
     if (error) {
+      console.log(error.message);
       return (
         <section>
           <p>Sorry, something went wrong. Please try again.</p>
-          <p>{error.message}</p>
         </section>
       );
     } else if (!isFetched) {
@@ -100,7 +115,7 @@ class App extends Component {
       );
     } else {
       const tasks = this.state.tasks.map( (task) => {
-        return <Task key={task[0].value} task={task} updateTask={this.updateTask}/>
+        return <Task key={task[0].value} task={task} updateTask={this.updateTask} putTaskUpdate={this.putTaskUpdate}/>
       });
       return (
         <section className="tasksContainer">
