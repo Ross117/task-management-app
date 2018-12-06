@@ -10,7 +10,6 @@ exports.getAllTasks = (res) => {
       // need to inform user of error (ie send to client)?
       console.log(err);
     } else {
-      // what if row count is zero?
       res.send(JSON.stringify(rows));
     }
   });
