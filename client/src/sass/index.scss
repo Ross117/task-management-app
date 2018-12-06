@@ -10,7 +10,13 @@ $colour-white-smoke: rgb(245, 245, 245);
 }
 
 html {
-  font-size: 62.5%;
+  font-size: 80%;
+}
+
+@media (max-width: 650px) {
+  html {
+    font-size: 62.5%;
+  }
 }
 
 body {
