@@ -5,9 +5,9 @@ import "../css/NewTaskForm.css";
 const NewTaskForm = (props) => { 
 
   return (
-    <div>
+    <div className="newTaskForm">
       <form>
-        <input type="text" placeholder="Task Title" value={props.newTaskTitle} onChange={props.handleNewTaskChange}/>
+        <input className="newTaskForm__titleInput" type="text" placeholder="Task Title" value={props.newTaskTitle} onChange={props.handleNewTaskChange}/>
         <NewTaskButton postNewTask={props.postNewTask}/>
       </form>
     </div>

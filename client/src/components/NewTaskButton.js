@@ -4,7 +4,7 @@ import "../css/NewTaskButton.css";
 const NewTaskButton = (props) => {
 
   return (
-    <button type="button" onClick={props.postNewTask}>Add Task</button>
+    <button className="newTaskButton" type="button" onClick={props.postNewTask}>Add Task</button>
   );
 };
 

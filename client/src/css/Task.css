@@ -5,8 +5,8 @@
   margin-top: 1rem;
   padding: 1rem;
   border: 0.2rem solid #f2f2f2;
-  box-shadow: -5px 5px 8px 0 #C1CCC6; }
-  .task input {
+  box-shadow: -0.5rem 0.5rem 0.8rem 0 #C1CCC6; }
+  .task input, .task select {
     display: block; }
   .task .task__title {
     font-size: 2rem;
@@ -15,7 +15,8 @@
   .task .task__desc {
     text-align: left;
     padding-top: 1.5rem;
-    border: none; }
+    border: none;
+    width: 80%; }
   .task .task__completed {
     position: absolute;
     top: 1rem;
@@ -26,6 +27,8 @@
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    border: none; }
+    width: 6rem;
+    border: none;
+    appearance: none; }
   .task .task__scheduledDt {
     border: none; }

@@ -8,9 +8,9 @@ $colour-light-grey: #C1CCC6;
   margin-top: 1rem;
   padding: 1rem;
   border: 0.2rem solid $colour-cream;
-  box-shadow: -5px 5px 8px 0 $colour-light-grey;
+  box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-light-grey;
 
-  input {
+  input, select {
     display: block;
   }
 
@@ -39,7 +39,9 @@ $colour-light-grey: #C1CCC6;
     position: absolute;
     right: 1rem;
     bottom: 1rem;
+    width: 6rem;
     border: none;
+    appearance: none;
   }
 
   .task__scheduledDt {
