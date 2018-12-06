@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Task from "./components/Task";
+import NewTaskForm from "./components/NewTaskForm"
 import "./css/App.css";
 
 class App extends Component {
@@ -9,18 +10,33 @@ class App extends Component {
       error: null,
       isFetched: false,
       tasks: [],
-      addTask: false
+      newTaskTitle: ""
     };
     
     this.getAllTasks = this.getAllTasks.bind(this);
     this.putTaskUpdate = this.putTaskUpdate.bind(this);
     this.updateTask = this.updateTask.bind(this);
+    this.handleNewTaskChange = this.handleNewTaskChange.bind(this);
+    this.postNewTask = this.postNewTask.bind(this);
   }
 
   getAllTasks = async () => {
     const res = await fetch("/allTasks");
-    const data = await res.json();
-    return data;
+    await res.json()
+      .then(
+        (data) => {
+        this.setState({
+          isFetched: true, 
+          tasks: data
+        });
+      }, 
+      (error) => {
+        this.setState({
+          error,
+          isFetched: true
+        });
+      }
+    );
   }
 
   putTaskUpdate(e) {
@@ -35,7 +51,7 @@ class App extends Component {
     updateValue = (fieldToUpdate === "task_completed" ? (e.target.checked ? 1 : 0) : e.target.value);
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
-      method: 'PUT'
+      method: "PUT"
     });
   }
 
@@ -68,22 +84,26 @@ class App extends Component {
     this.setState({tasks: updatedTaskState});
   }
 
+  handleNewTaskChange(e) {
+    const newTaskTitle = e.target.value;
+
+    this.setState({newTaskTitle});
+  }
+
+  postNewTask = async () => {
+    const newTaskTitle = this.state.newTaskTitle;
+    
+    if (newTaskTitle === "") return
+
+    await fetch (`/addTask/${newTaskTitle}`, {
+      method: "POST"
+    })
+      .then( () => this.setState({ newTaskTitle: "" }))
+      .then( () => this.getAllTasks());
+  }
+
   componentDidMount() {
-    this.getAllTasks()
-      .then(
-        (data) => {
-        this.setState({
-          isFetched: true, 
-          tasks: data
-        });
-      }, 
-      (error) => {
-        this.setState({
-          error,
-          isFetched: true
-        });
-      }
-    )
+    this.getAllTasks();  
   }
 
   render() {
@@ -108,6 +128,7 @@ class App extends Component {
       return (
         <section className="tasksContainer">
           {tasks}
+          <NewTaskForm newTaskTitle={this.state.newTaskTitle} handleNewTaskChange={this.handleNewTaskChange} postNewTask={this.postNewTask}/>
         </section>
       );
     }

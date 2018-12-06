@@ -16,8 +16,8 @@ app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", req => {
   amendTask(req);
 });
 
-app.post("/addTask", req => {
-  addTask(req);
+app.post("/addTask/:taskTitle", (req, res) => {
+  addTask(req, res);
 });
 
 app.listen(port, () => console.log(`API server listening on port ${port}!`));
