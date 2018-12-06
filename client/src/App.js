@@ -43,6 +43,8 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
+    // check lengths of title & desc?
+
     if (fieldToUpdate === "task_title" && updateValue === "") return;
 
     // possible to check if update represents an actual change?
@@ -61,6 +63,8 @@ class App extends Component {
 
   postNewTask = async () => {
     const newTaskTitle = this.state.newTaskTitle;
+
+  //  also check length?
 
     if (newTaskTitle === "") return;
 

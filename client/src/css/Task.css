@@ -5,7 +5,10 @@
   margin-top: 1rem;
   padding: 1rem;
   border: 0.2rem solid #f2f2f2;
-  box-shadow: -0.5rem 0.5rem 0.8rem 0 #C1CCC6; }
+  box-shadow: -0.5rem 0.5rem 0.8rem 0 #c1ccc6;
+  background-color: white; }
+  .task:hover {
+    box-shadow: -0.5rem 0.5rem 0.8rem 0 #343a40; }
   .task input, .task select {
     display: block; }
   .task .task__title {
@@ -14,21 +17,38 @@
     width: 80%; }
   .task .task__desc {
     text-align: left;
-    padding-top: 1.5rem;
+    margin: 1.5rem 0;
+    padding: 0.8rem;
     border: none;
-    width: 80%; }
+    width: 90%;
+    font-size: 1.5rem; }
   .task .task__completed {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    height: 2rem;
-    width: 2rem; }
+    height: 2.5rem;
+    width: 2.5rem; }
   .task .task__priority {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    width: 6rem;
+    width: 8rem;
+    padding: 0.6rem;
     border: none;
-    appearance: none; }
+    appearance: none;
+    font-size: 1.5rem;
+    font-weight: bold; }
+  .task .task__priority--high {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+    width: 8rem;
+    padding: 0.6rem;
+    border: none;
+    appearance: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+    background-color: #bb2525; }
   .task .task__scheduledDt {
-    border: none; }
+    border: none;
+    padding: 0.5rem; }

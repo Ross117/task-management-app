@@ -1,4 +1,8 @@
 .newTaskButton {
   margin: 0.5rem;
-  padding: 0.2rem;
-  font-size: 1.5rem; }
+  padding: 1rem;
+  font-size: 2rem;
+  background-color: #2f83e4;
+  border: none; }
+  .newTaskButton:hover {
+    background-color: #1a4679; }

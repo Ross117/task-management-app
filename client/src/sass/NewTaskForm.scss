@@ -1,6 +1,6 @@
 $colour-cream: rgb(242, 242, 242);
-// need to get rgb value
-$colour-light-grey: #c1ccc6;
+$colour-light-grey: rgb(193, 204, 198);
+$colour-white: rgb(255, 255, 255);
 
 .newTaskForm {
   width: 100%;
@@ -10,10 +10,11 @@ $colour-light-grey: #c1ccc6;
   padding: 1rem;
   border: 0.2rem solid $colour-cream;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-light-grey;
+  background-color: $colour-white;
 
   .newTaskForm__titleInput {
     font-size: 2rem;
     border: none;
-    width: 75%;
+    width: 70%;
   }
 }

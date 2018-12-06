@@ -1,6 +1,8 @@
 $colour-cream: rgb(242, 242, 242);
-// get rgb value
-$colour-light-grey: #C1CCC6;
+$colour-grey-light: rgb(193, 204, 198);
+$colour-grey-dark: rgb(52, 58, 64);
+$colour-white: rgb(255, 255, 255);
+$colour-red: rgb(187, 37, 37);
 
 .task {
   position: relative;
@@ -9,7 +11,12 @@ $colour-light-grey: #C1CCC6;
   margin-top: 1rem;
   padding: 1rem;
   border: 0.2rem solid $colour-cream;
-  box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-light-grey;
+  box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-grey-light;
+  background-color: $colour-white;
+
+  &:hover {
+    box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-grey-dark; 
+  }
 
   // not sure if this is necessary for select
   input, select {
@@ -24,30 +31,45 @@ $colour-light-grey: #C1CCC6;
 
   .task__desc {
     text-align: left;
-    padding-top: 1.5rem;
+    margin: 1.5rem 0;
+    padding: 0.8rem;
     border: none;
-    width: 80%;
+    width: 90%;
+    font-size: 1.5rem;
   }
 
   .task__completed {
     position: absolute;
     top: 1rem;
     right: 1rem;
-    height: 2rem;
-    width: 2rem;
+    height: 2.5rem;
+    width: 2.5rem;
   }
 
-  .task__priority {
+  @mixin select_priority {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
-    width: 6rem;
+    width: 8rem;
+    padding: 0.6rem;
     border: none;
     appearance: none;
+    font-size: 1.5rem;
+    font-weight: bold;
+  }
+
+  .task__priority {
+    @include select_priority; 
+  }
+
+  .task__priority--high {
+    @include select_priority; 
+    background-color: $colour-red;
   }
 
   .task__scheduledDt {
     border: none;
+    padding: 0.5rem;
   }
 }
 

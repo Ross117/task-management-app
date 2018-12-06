@@ -1,17 +1,19 @@
 import React from "react";
 import "../css/Task.css";
 
+// need to made sure user can't set required fields to null - js form validation
+
+// need to test db field limits for task title & task desc fields?
+
+// include save button?
+
 function Task(props) {
   const [id, , title, desc, completed, scheduledDt, priority] = props.task;
   const cleanedScheduledDt = scheduledDt.value
     ? scheduledDt.value.substring(0, 10)
     : "";
-
-  // need to made sure user can't set required fields to null - js form validation
-
-  // need to test db field limits for task title & task desc fields?
-
-  // include save button?
+  const priorityColour =
+    priority.value === "High" ? "task__priority--high" : "task__priority";
 
   return (
     <div className="task">
@@ -50,7 +52,7 @@ function Task(props) {
           onBlur={props.putTaskUpdate}
         />
         <select
-          className="task__priority"
+          className={priorityColour}
           name="priority_desc"
           value={priority.value}
           onChange={props.handleTaskUpdate}
