@@ -43,11 +43,7 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
-    // check lengths of title & desc?
-
     if (fieldToUpdate === "task_title" && updateValue === "") return;
-
-    // possible to check if update represents an actual change?
 
     updateValue =
       fieldToUpdate === "task_completed"
@@ -63,8 +59,6 @@ class App extends Component {
 
   postNewTask = async () => {
     const newTaskTitle = this.state.newTaskTitle;
-
-  //  also check length?
 
     if (newTaskTitle === "") return;
 
@@ -90,7 +84,7 @@ class App extends Component {
     const updatedTaskState = this.state.tasks.map(task => {
       const updateTaskfield = field => {
         if (field.metadata.colName === fieldToUpdate) {
-          // made a deep copy of the field obj
+          // made a deep copy of the field obj to prevent accidental state mutation
           const fieldCopy = JSON.parse(JSON.stringify(field));
           fieldCopy.value = updateValue;
           return fieldCopy;

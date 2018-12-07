@@ -1,12 +1,6 @@
 import React from "react";
 import "../css/Task.css";
 
-// need to made sure user can't set required fields to null - js form validation
-
-// need to test db field limits for task title & task desc fields?
-
-// include save button?
-
 function Task(props) {
   const [id, , title, desc, completed, scheduledDt, priority] = props.task;
   const cleanedScheduledDt = scheduledDt.value

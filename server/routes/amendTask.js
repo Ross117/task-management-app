@@ -23,7 +23,6 @@ exports.amendTask = req => {
 
   const request = new Request(qry, err => {
     if (err) {
-      // need to inform user of error (ie send to client)?
       console.log(err);
     }
   });

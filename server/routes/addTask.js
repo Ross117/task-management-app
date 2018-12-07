@@ -11,8 +11,6 @@ exports.addTask = (req, res) => {
   const request = new Request(qry, err => {
     if (err) {
       console.log(err);
-    } else {
-      res.send("New Task Added");
     }
   });
 

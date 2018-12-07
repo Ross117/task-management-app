@@ -7,7 +7,6 @@ exports.getAllTasks = (res) => {
     "FROM tasks LEFT JOIN task_priorities ON tasks.priority_id = task_priorities.priority_id;";
   const request = new Request(qry, (err, rowCount, rows) => {
     if (err) {
-      // need to inform user of error (ie send to client)?
       console.log(err);
     } else {
       res.send(JSON.stringify(rows));
