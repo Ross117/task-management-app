@@ -62,11 +62,27 @@ class App extends Component {
 
     if (newTaskTitle === "") return;
 
+    const newTask = [
+      { value: "", metadata: { colName: "task_id" } }, 
+      { value: "", metadata: { colName: "task_creation_dt" } }, 
+      { value: newTaskTitle, metadata: { colName: "task_title" } }, 
+      { value: "", metadata: { colName: "task_desc" } }, 
+      { value: "", metadata: { colName: "task_completed" } }, 
+      { value: "", metadata: { colName: "task_scheduled_dt" } }, 
+      { value: "", metadata: { colName: "priority_desc" } }
+    ];
+    
+    const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
+    tasksCopy.push(newTask);
+    
+    this.setState({ tasks: tasksCopy });
+    this.setState({ newTaskTitle: "" });
+
+    // what if the addTask API call returned the updated tasks data? Could then use it tp setState, triggering re-render
+
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST"
-    })
-      .then(() => this.setState({ newTaskTitle: "" }))
-      .then(() => this.getAllTasks());
+    });
   };
 
   handleTaskUpdate(e) {
