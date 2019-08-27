@@ -51,7 +51,7 @@ class App extends Component {
           ? 1
           : 0
         : e.target.value;
-
+    
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT"
     });
@@ -62,8 +62,20 @@ class App extends Component {
 
     if (newTaskTitle === "") return;
 
+    const biggestTaskID = this.state.tasks.map(task => {
+      return task[0].value;
+    }).reduce((acc, val) => {
+      if (val > acc) {
+        return val;
+      } else {
+        return acc;
+      } 
+    });
+
+    const newTaskID = biggestTaskID + 1;
+
     const newTask = [
-      { value: "", metadata: { colName: "task_id" } }, 
+      { value: newTaskID, metadata: { colName: "task_id" } }, 
       { value: "", metadata: { colName: "task_creation_dt" } }, 
       { value: newTaskTitle, metadata: { colName: "task_title" } }, 
       { value: "", metadata: { colName: "task_desc" } }, 
@@ -101,6 +113,7 @@ class App extends Component {
       const updateTaskfield = field => {
         if (field.metadata.colName === fieldToUpdate) {
           // made a deep copy of the field obj to prevent accidental state mutation
+
           const fieldCopy = JSON.parse(JSON.stringify(field));
           fieldCopy.value = updateValue;
           return fieldCopy;
@@ -130,6 +143,7 @@ class App extends Component {
   }
 
   render() {
+    console.log(this.state.tasks);
     const { error, isFetched } = this.state;
     if (error) {
       console.log(error.message);
