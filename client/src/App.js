@@ -143,10 +143,8 @@ class App extends Component {
   }
 
   render() {
-    console.log(this.state.tasks);
     const { error, isFetched } = this.state;
     if (error) {
-      console.log(error.message);
       return (
         <section>
           <p>Sorry, something went wrong. Please try again.</p>
