@@ -90,7 +90,7 @@ class App extends Component {
     this.setState({ tasks: tasksCopy });
     this.setState({ newTaskTitle: "" });
 
-    // what if the addTask API call returned the updated tasks data? Could then use it tp setState, triggering re-render
+    // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
 
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST"
