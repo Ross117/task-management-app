@@ -71,7 +71,7 @@ class App extends Component {
         return acc;
       } 
     });
-
+    
     const newTaskID = biggestTaskID + 1;
 
     const newTask = [
