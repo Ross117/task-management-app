@@ -10,7 +10,7 @@
   "devDependencies": {
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
-    "node-sass": "^4.10.0",
+    "node-sass": "^4.13.1",
     "react-test-renderer": "^16.9.0"
   },
   "scripts": {

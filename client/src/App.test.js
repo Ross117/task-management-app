@@ -1,26 +1,30 @@
 import React from "react";
-import { mount } from "enzyme";
 import App from "./App";
+import { mount } from "enzyme";
 
 describe("the App", () => {
 
   let mountedApp;
+  
   const app = () => {
     if (!mountedApp) {
       mountedApp = mount(<App />);
     }
     return mountedApp;
   };
-  const checkForSectionEle = () => {
-    const sections = app().find('section');
-    expect(sections.length).toBeGreaterThan(0);
-  }
 
   beforeEach(() => {
     mountedApp = undefined;
   });
 
-  describe("when error is not null", () => {
+  const sections = app().find('section');
+
+  const checkForSectionEle = () => {
+    expect(sections.length).toBeGreaterThan(0);
+  }
+
+  describe("when there is an error", () => {
+    
     beforeEach(() => {
       app().setState({ error: true });
     });
@@ -29,28 +33,21 @@ describe("the App", () => {
 
     describe("the rendered Section", () => {
 
-      test("it contains everything else that gets rendered", () => {
-
+      test("contains anything else that gets rendered", () => {
+        const expected = 1;
+        const acutal = app().children().length;
+        expect(acutal).toEqual(expected);
       });
 
-    });
-
-    test("a <p> element is the only other element which is rendered", () => {
-
-    });
-
-    describe("the <p> element", () => {
-
-      test("a <p> element containing a message informing the user of the error is rendered", () => {
+      test("only contains a <p> element", () => {
+        const wrappingSection = sections.first();
         const pEle = app().find('p');
-        expect(pEle.text()).toBe("Sorry, something went wrong. Please try again.");
+        expect(pEle.length).toEqual(wrappingSection.children().length);
       });
-    
-    })
-  
+    });
   });
   
-  describe("when isFetched is false and error is null", () => {
+  describe("when no data has been returned yet but there is no error", () => {
     beforeEach(() => {
       app().setState({ isFetched: false });
       app().setState({ error: null });
@@ -58,7 +55,7 @@ describe("the App", () => {
 
   });
 
-  describe("when isFetched is true and error is null", () => {
+  describe("when data has been returned", () => {
     beforeEach(() => {
       app().setState({ isFetched: true });
       app().setState({ error: null });
