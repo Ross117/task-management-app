@@ -6,10 +6,11 @@ package-lock.json
 .vscode
 
 # temp azure screenshots
-.PNG
+*.PNG
 
 # shell script
-.sh
+pg_dump_script.sh
 
 # heroku switch notes
-Heroku Postgres Switch Notes
+Heroku Postgres Switch Notes.txt
+
