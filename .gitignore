@@ -14,3 +14,5 @@ pg_dump_script.sh
 # heroku switch notes
 Heroku Postgres Switch Notes.txt
 
+# db Connection config
+connectionString.js
