@@ -16,19 +16,3 @@ exports.dbConnection = (clientRes, qry) => {
     client.end();
   });
 };
-  
-
-// const Connection = require("tedious").Connection;
-
-// exports.dbConnection = request => {
-//   const connection = new Connection(config);
-
-//   connection.on("connect", err => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       connection.execSql(request);
-//       connection.close;
-//     }
-//   });
-// };

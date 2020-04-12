@@ -160,7 +160,7 @@ class App extends Component {
       const tasks = this.state.tasks.map(task => {
         return (
           <Task
-            key={task[0].value}
+            key={task.task_id}
             task={task}
             handleTaskUpdate={this.handleTaskUpdate}
             putTaskUpdate={this.putTaskUpdate}
