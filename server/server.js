@@ -10,13 +10,13 @@ app.get("/allTasks", (req, res) => {
   getAllTasks(res);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", req => {
-  amendTask(req);
-});
+// app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", req => {
+//   amendTask(req);
+// });
 
-app.post("/addTask/:taskTitle", (req, res) => {
-  addTask(req, res);
-});
+// app.post("/addTask/:taskTitle", (req, res) => {
+//   addTask(req, res);
+// });
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));

@@ -1,23 +1,22 @@
 const { Client } = require("pg");
+// need to take below out of production build
 const connectionString = require("./connectionString.js").connectionString();
 
-const client = new Client({
-  connectionString: process.env.DATABASE_URL || connectionString,
-  ssl: { rejectUnauthorized: false },
-});
+exports.dbConnection = (clientRes, qry) => {
+  const client = new Client({
+    // need to take connectionString out of production build
+    connectionString: process.env.DATABASE_URL || connectionString,
+    ssl: { rejectUnauthorized: false },
+  });
 
-client.connect();
+  client.connect();
 
-client.query("SELECT * FROM tasks;", (err, res) => {
-
-  if (err) throw err;
-  for (let row of res.rows) {
-    console.log(JSON.stringify(row));
-  }  
-  client.end();
-});
-
-
+  client.query(qry, (err, qryRes) => {
+    clientRes.send(JSON.stringify(qryRes.rows));
+    client.end();
+  });
+};
+  
 
 // const Connection = require("tedious").Connection;
 
