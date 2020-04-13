@@ -2,22 +2,21 @@ import React from "react";
 import "../css/Task.css";
 
 function Task(props) {
-  console.log(props.task);
-  const {id, creationDt, title, desc, completed, scheduledDt, priority} = props.task;
-  const cleanedScheduledDt = scheduledDt
-    ? scheduledDt.value.substring(0, 10)
+  const {task_id, task_creation_dt, task_title, task_desc, task_completed, task_scheduled_dt, priority_desc} = props.task;
+  const cleanedScheduledDt = task_scheduled_dt
+    ? task_scheduled_dt.substring(0, 10)
     : "";
   const priorityColour =
-    priority === "High" ? "task__priority--high" : "task__priority";
-
+    priority_desc === "High" ? "task__priority--high" : "task__priority";
+  
   return (
     <div className="task">
-      <form id={id}>
+      <form id={task_id}>
         <input
           className="task__title"
           type="text"
           name="task_title"
-          value={title}
+          value={task_title}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -25,7 +24,7 @@ function Task(props) {
           className="task__completed"
           type="checkbox"
           name="task_completed"
-          checked={completed}
+          checked={task_completed}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -34,7 +33,7 @@ function Task(props) {
           type="text"
           name="task_desc"
           placeholder="..."
-          value={desc}
+          value={task_desc}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -49,7 +48,7 @@ function Task(props) {
         <select
           className={priorityColour}
           name="priority_desc"
-          value={priority}
+          value={priority_desc}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         >
