@@ -48,10 +48,10 @@ class App extends Component {
     updateValue =
       fieldToUpdate === "task_completed"
         ? e.target.checked
-          ? 1
-          : 0
+          ? true
+          : false
         : e.target.value;
-    
+
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT"
     });
@@ -63,7 +63,7 @@ class App extends Component {
     if (newTaskTitle === "") return;
 
     const biggestTaskID = this.state.tasks.map(task => {
-      return task[0].value;
+      return task.task_id;
     }).reduce((acc, val) => {
       if (val > acc) {
         return val;
@@ -105,25 +105,20 @@ class App extends Component {
     updateValue =
       fieldToUpdate === "task_completed"
         ? e.target.checked
-          ? 1
-          : 0
+          ? true
+          : false
         : e.target.value;
 
     const updatedTaskState = this.state.tasks.map(task => {
-      const updateTaskfield = field => {
-        if (field.metadata.colName === fieldToUpdate) {
-          // made a deep copy of the field obj to prevent accidental state mutation
+      const updateTask = task => {
+        const taskCopy = JSON.parse(JSON.stringify(task));
+        taskCopy[fieldToUpdate] = updateValue;
 
-          const fieldCopy = JSON.parse(JSON.stringify(field));
-          fieldCopy.value = updateValue;
-          return fieldCopy;
-        } else {
-          return field;
-        }
+        return taskCopy;
       };
 
-      if (task[0].value === taskID) {
-        return task.map(updateTaskfield);
+      if (task.task_id === taskID) {
+        return updateTask(task);
       } else {
         return task;
       }

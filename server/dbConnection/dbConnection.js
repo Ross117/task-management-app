@@ -9,7 +9,7 @@ exports.dbConnection = (clientRes, qry) => {
   client.connect();
 
   client.query(qry, (err, qryRes) => {
-    clientRes.send(JSON.stringify(qryRes.rows));
+    if (clientRes) clientRes.send(JSON.stringify(qryRes.rows));
     client.end();
   });
 };
