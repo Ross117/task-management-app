@@ -74,15 +74,15 @@ class App extends Component {
     
     const newTaskID = biggestTaskID + 1;
 
-    const newTask = [
-      { value: newTaskID, metadata: { colName: "task_id" } }, 
-      { value: "", metadata: { colName: "task_creation_dt" } }, 
-      { value: newTaskTitle, metadata: { colName: "task_title" } }, 
-      { value: "", metadata: { colName: "task_desc" } }, 
-      { value: "", metadata: { colName: "task_completed" } }, 
-      { value: "", metadata: { colName: "task_scheduled_dt" } }, 
-      { value: "", metadata: { colName: "priority_desc" } }
-    ];
+    const newTask = {
+      "task_id": newTaskID,
+      "task_creation_dt": "", 
+      "task_title": newTaskTitle, 
+      "task_desc": "", 
+      "task_completed": "", 
+      "task_scheduled_dt": "", 
+      "priority_desc": "Low",
+    };
     
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
     tasksCopy.push(newTask);

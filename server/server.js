@@ -14,9 +14,9 @@ app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
   amendTask(req);
 });
 
-// app.post("/addTask/:taskTitle", (req, res) => {
-//   addTask(req, res);
-// });
+app.post("/addTask/:taskTitle", (req, res) => {
+  addTask(req);
+});
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
