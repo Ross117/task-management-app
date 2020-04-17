@@ -10,7 +10,7 @@ app.get("/allTasks", (req, res) => {
   getAllTasks(res);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", req => {
+app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
   amendTask(req);
 });
 
