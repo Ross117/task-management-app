@@ -1,7 +1,7 @@
 {
   "name": "task-management-app",
   "version": "2.0.0",
-  "description": "A simple web-based task scheduler",
+  "description": "A simple web-based Task Manager",
   "scripts": {
     "start": "node server/server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
