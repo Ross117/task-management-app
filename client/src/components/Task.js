@@ -11,7 +11,7 @@ function Task(props) {
   
   return (
     <div className="task">
-      <form id={task_id}>
+      <form id={task_id} autoComplete="off">
         <input
           className="task__title"
           type="text"
