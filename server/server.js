@@ -4,7 +4,7 @@ const app = express();
 const getAllTasks = require("./routes/getAllTasks.js").getAllTasks;
 const addTask = require("./routes/addTask.js").addTask;
 const amendTask = require("./routes/amendTask.js").amendTask;
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
 app.get("/allTasks", (req, res) => {
   getAllTasks(res);
@@ -26,4 +26,4 @@ if (process.env.NODE_ENV === "production") {
   });
 }
 
-app.listen(port, () => console.log(`API server listening on port ${port}!`));
+app.listen(port);
