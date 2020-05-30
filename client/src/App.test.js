@@ -1,11 +1,14 @@
 import React from "react";
 import App from "./App";
+import NewTaskForm from "./components/NewTaskForm";
+import Task from "./components/Task";
 import { mount } from "enzyme";
 
-describe("the App", () => {
+// describe what I want to test, not how something will be tested
 
+describe("the App", () => {
   let mountedApp;
-  
+
   const app = () => {
     if (!mountedApp) {
       mountedApp = mount(<App />);
@@ -17,14 +20,38 @@ describe("the App", () => {
     mountedApp = undefined;
   });
 
-  const sections = app().find('section');
-
   const checkForSectionEle = () => {
+    const sections = app().find("section");
     expect(sections.length).toBeGreaterThan(0);
-  }
+  };
 
-  describe("when there is an error", () => {
-    
+  const checkAppHasOnlyOneChild = () => {
+    expect(app().children().length).toEqual(1);
+  };
+
+  const checkFirstSectionOnlyHasAPEle = () => {
+    const sections = app().find("section");
+    const wrappingSection = sections.first();
+    const pEles = app().find("p");
+    expect(pEles.length).toEqual(wrappingSection.children().length);
+  };
+
+  describe("while the initial GET request hasn't yet completed", () => {
+    beforeEach(() => {
+      app().setState({ isFetched: false });
+      app().setState({ error: null });
+    });
+
+    test("the App renders a Section element", checkForSectionEle);
+
+    describe("the rendered Section", () => {
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
+
+      test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
+    });
+  });
+
+  describe("when the initial GET request returns an error", () => {
     beforeEach(() => {
       app().setState({ error: true });
     });
@@ -32,87 +59,77 @@ describe("the App", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
 
-      test("contains anything else that gets rendered", () => {
-        const expected = 1;
-        const acutal = app().children().length;
-        expect(acutal).toEqual(expected);
-      });
-
-      test("only contains a <p> element", () => {
-        const wrappingSection = sections.first();
-        const pEle = app().find('p');
-        expect(pEle.length).toEqual(wrappingSection.children().length);
-      });
+      test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
     });
   });
-  
-  describe("when no data has been returned yet but there is no error", () => {
-    beforeEach(() => {
-      app().setState({ isFetched: false });
-      app().setState({ error: null });
-    });
 
-  });
-
-  describe("when data has been returned", () => {
+  describe("when the initial GET request completes successfully", () => {
     beforeEach(() => {
       app().setState({ isFetched: true });
       app().setState({ error: null });
     });
 
-    // test that the Tasks Container section is rendered
     test("the App renders a Section element", checkForSectionEle);
 
-    // test.todo("everything else is contained within the Section element");
+    describe("the rendered Section", () => {
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
 
-    test("the App renders a New Task Form component", () => {
-      const newTaskForm = app().find('.newTaskForm');
-      expect(newTaskForm).toHaveLength(1);
-    });
+      test("always includes a New Task Form component", () => {
+        const newTaskForm = app().find(NewTaskForm);
+        expect(newTaskForm.length).toEqual(1);
+      });
 
-    describe("the New Task Form component", () => {
+      describe("the New Task Form component", () => {
+        test("is passed 3 props", () => {
+          const newTaskForm = app().find(NewTaskForm);
+          const props = Object.keys(newTaskForm.props());
+          expect(props.length).toEqual(3);
+        });
+        
+        // test that state.newTaskTitle is updated when Task Title is updated - concern of which component?
+        // test that state.Tasks is updated when a new task is added - concern of which component?
+      });
 
-    // test props passed to new task component
-
-    // test that state.newTaskTitle is updated when Task Title is updated
-
-    // test that state.Tasks is updated when a new task is added
-    });
+      describe("when a Task is returned by the initial GET request", () => {
+        beforeEach(() => {
+          const mockTask = {
+            "task_id": "",
+            "task_creation_dt": "", 
+            "task_title": "", 
+            "task_desc": "", 
+            "task_completed": "", 
+            "task_scheduled_dt": "", 
+            "priority_desc": "Low",
+          };
+          app().setState({ tasks: [mockTask] });
+        });
   
-    describe("when tasks is not empty", () => {
-      beforeEach(() => {
-        const mockTask = [
-          { value: "", metadata: { colName: "task_id" } }, 
-          { value: "", metadata: { colName: "task_creation_dt" } }, 
-          { value: "", metadata: { colName: "task_title" } }, 
-          { value: "", metadata: { colName: "task_desc" } }, 
-          { value: "", metadata: { colName: "task_completed" } }, 
-          { value: "", metadata: { colName: "task_scheduled_dt" } }, 
-          { value: "", metadata: { colName: "priority_desc" } }
-        ];
-        app().setState({ tasks: [mockTask] });
+        test("a Task component is rendered", () => {
+          const tasks = app().find(Task);
+          expect(tasks.length).toEqual(1);
+        });
+
+        test("the number of Task components rendered reflects the number of task objects returned by the API", () => {
+          const tasks = app().find(Task);
+          expect(tasks.length).toEqual(app().state('tasks').length);
+        });
+  
+        describe("the Task component", () => {
+          test("is passed 3 props", () => {
+            const task = app().find(Task);
+            const props = Object.keys(task.props());
+            expect(props.length).toEqual(3);
+          });
+
+          // test Task values match state?
+
+          // Test that state.Tasks is updated when a Task field is updated - concern of which component?
+        });
       });
-
-      test("the App renders a Task component", () => {   
-        const tasks = app().find('.task');
-        expect(tasks).toHaveLength(1);
-      });
-
-      // test number of Tasks matches state.Tasks?
-
-      describe("the Task component", () => {
-      
-        // test props passed to task component
-
-        // Test that state.Tasks is updated when a Task field is updated
-      });
-      
     });
-
   });
 
-  // can test the API calls?
-  
-
+  // can test the API calls? - would this be integration testing?
 });
