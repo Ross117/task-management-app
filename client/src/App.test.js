@@ -6,7 +6,7 @@ import { mount } from "enzyme";
 
 // describe what I want to test, not how something will be tested
 
-describe("the App", () => {
+describe("the App component", () => {
   let mountedApp;
 
   const app = () => {
@@ -45,7 +45,10 @@ describe("the App", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
+      test(
+        "contains anything else that gets rendered",
+        checkAppHasOnlyOneChild
+      );
 
       test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
     });
@@ -59,7 +62,10 @@ describe("the App", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
+      test(
+        "contains anything else that gets rendered",
+        checkAppHasOnlyOneChild
+      );
 
       test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
     });
@@ -74,7 +80,10 @@ describe("the App", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
+      test(
+        "contains anything else that gets rendered",
+        checkAppHasOnlyOneChild
+      );
 
       test("always includes a New Task Form component", () => {
         const newTaskForm = app().find(NewTaskForm);
@@ -87,7 +96,7 @@ describe("the App", () => {
           const props = Object.keys(newTaskForm.props());
           expect(props.length).toEqual(3);
         });
-        
+
         // test that state.newTaskTitle is updated when Task Title is updated - concern of which component?
         // test that state.Tasks is updated when a new task is added - concern of which component?
       });
@@ -95,17 +104,17 @@ describe("the App", () => {
       describe("when a Task is returned by the initial GET request", () => {
         beforeEach(() => {
           const mockTask = {
-            "task_id": "",
-            "task_creation_dt": "", 
-            "task_title": "", 
-            "task_desc": "", 
-            "task_completed": "", 
-            "task_scheduled_dt": "", 
-            "priority_desc": "Low",
+            task_id: 5,
+            task_creation_dt: "2020-03-30T14:24:21.437Z",
+            task_title: "Finish French Homework",
+            task_desc: "Involves some verb conjugation",
+            task_completed: false,
+            task_scheduled_dt: "2020-04-25T00:00:00.000Z",
+            priority_desc: "High",
           };
           app().setState({ tasks: [mockTask] });
         });
-  
+
         test("a Task component is rendered", () => {
           const tasks = app().find(Task);
           expect(tasks.length).toEqual(1);
@@ -113,9 +122,9 @@ describe("the App", () => {
 
         test("the number of Task components rendered reflects the number of task objects returned by the API", () => {
           const tasks = app().find(Task);
-          expect(tasks.length).toEqual(app().state('tasks').length);
+          expect(tasks.length).toEqual(app().state("tasks").length);
         });
-  
+
         describe("the Task component", () => {
           test("is passed 3 props", () => {
             const task = app().find(Task);
@@ -123,7 +132,7 @@ describe("the App", () => {
             expect(props.length).toEqual(3);
           });
 
-          // test Task values match state?
+          // test values of props passed to Task (could use a mock props object)?
 
           // Test that state.Tasks is updated when a Task field is updated - concern of which component?
         });
