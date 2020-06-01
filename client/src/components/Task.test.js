@@ -1,5 +1,4 @@
 import React from "react";
-import App from "../App";
 import Task from "./Task";
 import { mount } from "enzyme";
 
@@ -8,91 +7,89 @@ import { mount } from "enzyme";
 // type check props?
 
 describe("the Task component", () => {
-  let mountedApp;
+  let mountedTask;
+  let props;
 
-  const app = () => {
-    if (!mountedApp) {
-      mountedApp = mount(<App />);
+  const task = () => {
+    if (!mountedTask) {
+      mountedTask = mount(<Task {...props} />);
     }
-    return mountedApp;
+    return mountedTask;
   };
 
   beforeEach(() => {
-    mountedApp = undefined;
-
-    const mockTask = {
-      task_id: 5,
-      task_creation_dt: "2020-03-30T14:24:21.437Z",
-      task_title: "Finish French Homework",
-      task_desc: "Involves some verb conjugation",
-      task_completed: false,
-      task_scheduled_dt: "2020-04-25T00:00:00.000Z",
-      priority_desc: "High",
+    mountedTask = undefined;
+    props = {
+      task: {
+        task_id: 5,
+        task_creation_dt: "2020-03-30T14:24:21.437Z",
+        task_title: "Finish French Homework",
+        task_desc: "Involves some verb conjugation",
+        task_completed: false,
+        task_scheduled_dt: "2020-04-25T00:00:00.000Z",
+        priority_desc: "High",
+      },
+      handleTaskUpdate: undefined,
+      putTaskUpdate: undefined,
     };
-
-    app().setState({ isFetched: true });
-    app().setState({ tasks: [mockTask] });
   });
 
   describe("when it's rendered", () => {
     //   test.todo("what HTML elements Task renders");
 
-    //  should I be testing the value of the elements against the props which were passed, and not state stored in App?
-    //  ...this seems more the concern of Task
-
     describe("the Task Scheduled Date input element", () => {
-      test("has a value which equals the value stored in state", () => {
-        const taskSchdDtInput = app().find(".task__scheduledDt");
-        const taskSchdDtState = app()
-          .state()
-          .tasks[0].task_scheduled_dt.substring(0, 10);
-        expect(taskSchdDtInput.props().value).toEqual(taskSchdDtState);
+      test("has a value which equals a substring of the task.task_scheduled_dt prop", () => {
+        const taskSchdDtInput = task().find(".task__scheduledDt");
+        const taskSchdDtProp = task().props().task.task_scheduled_dt
+          .substring(0, 10);
+        expect(taskSchdDtInput.props().value).toEqual(taskSchdDtProp);
       });
     });
 
     describe("the Task Title input element", () => {
-      test("has a value which equals the value stored in state", () => {
-        const taskTitleInput = app().find(".task__title");
-        const taskTitleState = app().state().tasks[0].task_title;
-        expect(taskTitleInput.props().value).toEqual(taskTitleState);
+      test("has a value which equals the task.task_title prop", () => {
+        const taskTitleInput = task().find(".task__title");
+        const taskTitleProp = task().props().task.task_title;
+        expect(taskTitleInput.props().value).toEqual(taskTitleProp);
       });
     });
-    
-   describe("the Task Desc input element", () => {
-     test("has a value which equals the value stored in state", () => {
-       const taskDescInput = app().find(".task__desc");
-       const taskDescState = app().state().tasks[0].task_desc;
-       expect(taskDescInput.props().value).toEqual(taskDescState);
+
+    describe("the Task Desc input element", () => {
+      test("has a value which equals the task.task_desc prop", () => {
+        const taskDescInput = task().find(".task__desc");
+        const taskDescProp = task().props().task.task_desc;
+        expect(taskDescInput.props().value).toEqual(taskDescProp);
       });
-   });
-    
+    });
+
     describe("the Task Completed input element", () => {
-      test("has a value which equals the value stored in state", () => {
-        const taskCompInput = app().find(".task__completed");
-        const taskCompState = app().state().tasks[0].task_completed;
-        expect(taskCompInput.props().checked).toEqual(taskCompState);
+      test("has a value which equals the task.task_completed prop", () => {
+        const taskCompInput = task().find(".task__completed");
+        const taskCompProp = task().props().task.task_completed;
+        expect(taskCompInput.props().checked).toEqual(taskCompProp);
       });
     });
-    
+
     describe("the Priority Desc select element", () => {
       test("has a class name of 'task__priority--high' if the value of the priority_desc prop is 'high'", () => {
-        const priorityDescSelect = app().find("select[name='priority_desc']");
+        const priorityDescSelect = task().find("select[name='priority_desc']");
         expect(priorityDescSelect.props().className).toEqual("task__priority--high");
       });
 
       test("has a class name of 'task__priority' if the value of the priority_desc prop is not 'high'", () => {
-        const priorityDescSelect = app().find("select[name='priority_desc']");
+        props.task.priority_desc = "Low";
+        const priorityDescSelect = task().find("select[name='priority_desc']");
         expect(priorityDescSelect.props().className).toEqual("task__priority");
       });
 
-      test("has a value which equals the value stored in state", () => {
-        const priorityDescSelect = app().find("select[name='priority_desc']");
-        const priorityDescState = app().state().tasks[0].priority_desc;
-        expect(priorityDescSelect.props().value).toEqual(priorityDescState);
+      test("has a value which equals the task.priority_desc prop", () => {
+        const priorityDescSelect = task().find("select[name='priority_desc']");
+        const priorityDescProp = task().props().task.priority_desc;
+        expect(priorityDescSelect.props().value).toEqual(priorityDescProp);
       });
     });
 
-    //   test.todo("the values of Task are updated when the user makes an update (i.e. fires the onChange event");
+    //   test.todo("the values of Task are updated when the user makes an update (i.e. fires the onChange event") - concern of App?;
 
     //   test.todo("the putTaskUpdate function is executed when the user fires the onBlur event");
   });
