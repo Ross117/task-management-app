@@ -6,6 +6,8 @@ import { mount } from "enzyme";
 
 // describe what I want to test, not how something will be tested
 
+// can test the API calls? - would this be integration testing?
+
 describe("the App component", () => {
   let mountedApp;
 
@@ -45,11 +47,7 @@ describe("the App component", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test(
-        "contains anything else that gets rendered",
-        checkAppHasOnlyOneChild
-      );
-
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
       test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
     });
   });
@@ -62,11 +60,7 @@ describe("the App component", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test(
-        "contains anything else that gets rendered",
-        checkAppHasOnlyOneChild
-      );
-
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
       test("only contains a <p> element", checkFirstSectionOnlyHasAPEle);
     });
   });
@@ -80,11 +74,7 @@ describe("the App component", () => {
     test("the App renders a Section element", checkForSectionEle);
 
     describe("the rendered Section", () => {
-      test(
-        "contains anything else that gets rendered",
-        checkAppHasOnlyOneChild
-      );
-
+      test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
       test("always includes a New Task Form component", () => {
         const newTaskForm = app().find(NewTaskForm);
         expect(newTaskForm.length).toEqual(1);
@@ -97,8 +87,23 @@ describe("the App component", () => {
           expect(props.length).toEqual(3);
         });
 
-        // test that state.newTaskTitle is updated when Task Title is updated - concern of which component?
-        // test that state.Tasks is updated when a new task is added - concern of which component?
+        describe("the value of the newTaskTitle prop", () => {
+          test("matches the value held in state", () => {
+            const newTaskForm = app().find(NewTaskForm);
+            expect(newTaskForm.props().newTaskTitle).toEqual(app().state().newTaskTitle);
+          });
+        });
+
+        describe("when the user updates the value of the input field", () => {
+          test("App state is updated accordingly", () => {
+            const newTaskForm = app().find(NewTaskForm);
+            const update = "A new Task Title";
+            newTaskForm.find(".newTaskForm__titleInput").simulate("change", { target: { value: update } });
+            expect(app().state().newTaskTitle).toEqual(update);
+          });
+        });
+        
+        // test that a new task is added and an updated New Task Form with a blank input field is rendered when the Add Task button is pressed - concern of which component?
       });
 
       describe("when a Task is returned by the initial GET request", () => {
@@ -120,7 +125,7 @@ describe("the App component", () => {
           expect(tasks.length).toEqual(1);
         });
 
-        test("the number of Task components rendered reflects the number of task objects returned by the API", () => {
+        test("the number of Task components rendered matches the number of task objects returned by the API", () => {
           const tasks = app().find(Task);
           expect(tasks.length).toEqual(app().state("tasks").length);
         });
@@ -132,13 +137,25 @@ describe("the App component", () => {
             expect(props.length).toEqual(3);
           });
 
-          // test values of props passed to Task (could use a mock props object)?
+          describe("the values of the task prop", () => {
+            test("match the values held in state", () => {
+              const task = app().find(Task);
+              expect(task.props().task).toEqual(app().state().tasks[0]);
+            });
+          });
 
-          // Test that state.Tasks is updated when a Task field is updated - concern of which component?
+          describe("when the user updates the values of the component", () => {
+            test("App state is updated accordingly", () => {
+              // create a function which will allow testing of all input elements (the checkbox input is treated differently by the update function)
+               const update = "A new Task Title";
+               const task = app().find(Task);
+               task.find(".task__title").simulate("change", { target: { name: "task_title", value: update, parentNode: { id: 5 } } });
+               const state = app().state().tasks[0];
+               expect(state.task_title).toEqual(update);
+            });
+          });
         });
       });
     });
   });
-
-  // can test the API calls? - would this be integration testing?
 });
