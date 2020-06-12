@@ -1,10 +1,6 @@
 import React from "react";
-import Task from "./Task";
 import { mount } from "enzyme";
-
-// describe what I want to test, not how something will be tested
-
-// type check props?
+import Task from "./Task";
 
 describe("the Task component", () => {
   let mountedTask;
@@ -20,7 +16,6 @@ describe("the Task component", () => {
   beforeEach(() => {
     mountedTask = undefined;
     props = {
-      // could this be a shared obj between both App & Test files?
       task: {
         task_id: 5,
         task_creation_dt: "2020-03-30T14:24:21.437Z",
@@ -55,7 +50,6 @@ describe("the Task component", () => {
           const form = task().find("form");
           expect(form.children("input").length).toBe(4);
         });
-        // check the select ele has 3 options?
         test("contains 1 select element", () => {
           const form = task().find("form");
           expect(form.children("select").length).toBe(1);
