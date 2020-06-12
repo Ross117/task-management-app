@@ -6,8 +6,6 @@ import { mount } from "enzyme";
 
 // type check props?
 
-// add onChange & onBlur tests to all input eles?
-
 describe("the Task component", () => {
   let mountedTask;
   let props;
@@ -57,6 +55,7 @@ describe("the Task component", () => {
           const form = task().find("form");
           expect(form.children("input").length).toBe(4);
         });
+        // check the select ele has 3 options?
         test("contains 1 select element", () => {
           const form = task().find("form");
           expect(form.children("select").length).toBe(1);
@@ -64,12 +63,30 @@ describe("the Task component", () => {
       });
     });
 
+    const checkEventTriggersFnCall = (selector, event, fn) => {
+      const ele = task().find(selector);
+      ele.simulate(event);
+      expect(props[fn]).toHaveBeenCalled();
+    };
+
     describe("the Task Scheduled Date input element", () => {
       test("has a value which matches a substring of the task.task_scheduled_dt prop", () => {
         const taskSchdDtInput = task().find(".task__scheduledDt");
         const taskSchdDtProp = task().props().task.task_scheduled_dt
           .substring(0, 10);
         expect(taskSchdDtInput.props().value).toBe(taskSchdDtProp);
+      });
+
+      describe("when the onChange event is fired", () => {
+        test("the handleTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__scheduledDt", "change", "handleTaskUpdate");
+        });
+      });
+
+      describe("when the onBlur event is fired", () => {
+        test("the putTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__scheduledDt", "blur", "putTaskUpdate");
+        });
       });
     });
 
@@ -82,17 +99,13 @@ describe("the Task component", () => {
 
       describe("when the onChange event is fired", () => {
         test("the handleTaskUpdate function is called", () => {
-          const taskTitleInput = task().find(".task__title");
-          taskTitleInput.simulate("change");
-          expect(props.handleTaskUpdate).toHaveBeenCalled();
+          checkEventTriggersFnCall(".task__title", "change", "handleTaskUpdate");
         });
       });
 
       describe("when the onBlur event is fired", () => {
         test("the putTaskUpdate function is called", () => {
-          const taskTitleInput = task().find(".task__title");
-          taskTitleInput.simulate("blur");
-          expect(props.putTaskUpdate).toHaveBeenCalled();
+          checkEventTriggersFnCall(".task__title", "blur", "putTaskUpdate");
         });
       });
     });
@@ -103,6 +116,18 @@ describe("the Task component", () => {
         const taskDescProp = task().props().task.task_desc;
         expect(taskDescInput.props().value).toBe(taskDescProp);
       });
+
+      describe("when the onChange event is fired", () => {
+        test("the handleTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__desc", "change", "handleTaskUpdate");
+        });
+      });
+
+      describe("when the onBlur event is fired", () => {
+        test("the putTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__desc", "blur", "putTaskUpdate");
+        });
+      });
     });
 
     describe("the Task Completed input element", () => {
@@ -110,6 +135,18 @@ describe("the Task component", () => {
         const taskCompInput = task().find(".task__completed");
         const taskCompProp = task().props().task.task_completed;
         expect(taskCompInput.props().checked).toBe(taskCompProp);
+      });
+
+      describe("when the onChange event is fired", () => {
+        test("the handleTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__completed", "change", "handleTaskUpdate");
+        });
+      });
+
+      describe("when the onBlur event is fired", () => {
+        test("the putTaskUpdate function is called", () => {
+          checkEventTriggersFnCall(".task__completed", "blur", "putTaskUpdate");
+        });
       });
     });
 
@@ -129,6 +166,18 @@ describe("the Task component", () => {
         const priorityDescSelect = task().find("select[name='priority_desc']");
         const priorityDescProp = task().props().task.priority_desc;
         expect(priorityDescSelect.props().value).toBe(priorityDescProp);
+      });
+
+      describe("when the onChange event is fired", () => {
+        test("the handleTaskUpdate function is called", () => {
+          checkEventTriggersFnCall("select[name='priority_desc']", "change", "handleTaskUpdate");
+        });
+      });
+
+      describe("when the onBlur event is fired", () => {
+        test("the putTaskUpdate function is called", () => {
+          checkEventTriggersFnCall("select[name='priority_desc']", "blur", "putTaskUpdate");
+        });
       });
     });
   });
