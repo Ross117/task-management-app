@@ -59,19 +59,24 @@ class App extends Component {
 
   postNewTask = async () => {
     const newTaskTitle = this.state.newTaskTitle;
+    let biggestTaskID;
 
     if (newTaskTitle === "") return;
 
-    const biggestTaskID = this.state.tasks.map(task => {
-      return task.task_id;
-    }).reduce((acc, val) => {
-      if (val > acc) {
-        return val;
-      } else {
-        return acc;
-      } 
-    });
-    
+    if (this.state.tasks.length === 0) {
+      biggestTaskID = 0;
+    } else {
+      biggestTaskID = this.state.tasks.map(task => {
+        return task.task_id;
+      }).reduce((acc, val) => {
+        if (val > acc) {
+          return val;
+        } else {
+          return acc;
+        } 
+      });
+    }
+
     const newTaskID = biggestTaskID + 1;
 
     const newTask = {
