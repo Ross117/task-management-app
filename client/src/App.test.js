@@ -1,14 +1,9 @@
 import React from "react";
-import App from "./App";
-import NewTaskForm from "./components/NewTaskForm";
-import Task from "./components/Task";
 import { mount } from "enzyme";
-
-// describe what I want to test, not how something will be tested
-
-// can test the API calls? - would this be integration testing?
-
-// type check props?
+import App from "./App";
+import Task from "./components/Task";
+import NewTaskForm from "./components/NewTaskForm";
+import NewTaskButton from "./components/NewTaskButton";
 
 describe("the App component", () => {
   let mountedApp;
@@ -104,8 +99,30 @@ describe("the App component", () => {
             expect(app().state().newTaskTitle).toBe(update);
           });
         });
-        
-        // test that a new task is added and an updated New Task Form with a blank input field is rendered when the Add Task button is pressed - concern of which component?
+
+        describe("when the user clicks the Add Task button", () => {
+          test("state is not updated if the Task Title is empty", () => {
+            const newTaskButton = app().find(NewTaskButton);
+            newTaskButton.simulate("click");
+            expect(app().state("tasks").length).toBe(0);
+          });
+
+          describe("if the Task Title is not empty", () => {
+            beforeEach(() => {
+              const newTaskForm = app().find(NewTaskForm);
+              const update = "A new Task Title";
+              newTaskForm.find(".newTaskForm__titleInput").simulate("change", { target: { value: update } });
+              const newTaskButton = app().find(NewTaskButton);
+              newTaskButton.find(".newTaskButton").simulate("click");
+            });
+            test("state is updated with the new task", () => {
+              expect(app().state("tasks").length).toBe(1);
+            });
+            test("the newTaskTitle property held in state is reset to an empty string", () => {
+              expect(app().state("newTaskTitle")).toBe("");
+            });
+          });
+        });
       });
 
       describe("when a Task is returned by the initial GET request", () => {
