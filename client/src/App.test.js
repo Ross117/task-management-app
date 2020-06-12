@@ -146,14 +146,43 @@ describe("the App component", () => {
             });
           });
 
-          describe("when the user updates the values of the component", () => {
+          const checkAppStateIsUpdated = (update, selector, name) => {
+            const task = app().find(Task);
+            const taskID = app().state().tasks[0].task_id;
+            name === "task_completed"
+              ?  task.find(selector).simulate("change", { target: { name: name, checked: update, parentNode: { id: taskID } } })
+              :  task.find(selector).simulate("change", { target: { name: name, value: update, parentNode: { id: taskID } } })
+            const state = app().state().tasks[0];
+            expect(state[name]).toBe(update);
+          };
+
+          describe("when the user updates the value of the Task Scheduled Date input element", () => {
             test("App state is updated accordingly", () => {
-              // create a function which will allow testing of all input elements (the checkbox input is treated differently by the update function)
-               const update = "A new Task Title";
-               const task = app().find(Task);
-               task.find(".task__title").simulate("change", { target: { name: "task_title", value: update, parentNode: { id: 5 } } });
-               const state = app().state().tasks[0];
-               expect(state.task_title).toBe(update);
+              checkAppStateIsUpdated("2020-05-05T01:00:00.000Z", ".task__scheduledDt", "task_scheduled_dt");
+            });
+          });
+
+          describe("when the user updates the value of the Task Title input element", () => {
+            test("App state is updated accordingly", () => {
+              checkAppStateIsUpdated("A new Task Title", ".task__title", "task_title");
+            });
+          });
+
+          describe("when the user updates the value of the Task Desc input element", () => {
+            test("App state is updated accordingly", () => {
+              checkAppStateIsUpdated("A new Task Description", ".task__desc", "task_desc");
+            });
+          });
+
+          describe("when the user updates the value of the Task Completed input element", () => {
+            test("App state is updated accordingly", () => {
+              checkAppStateIsUpdated(true, ".task__completed", "task_completed");
+            });
+          });
+
+          describe("when the user updates the value of the Priority Desc select element", () => {
+            test("App state is updated accordingly", () => {
+              checkAppStateIsUpdated("Low", "select[name='priority_desc']", "priority_desc");
             });
           });
         });
