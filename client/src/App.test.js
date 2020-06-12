@@ -8,6 +8,8 @@ import { mount } from "enzyme";
 
 // can test the API calls? - would this be integration testing?
 
+// type check props?
+
 describe("the App component", () => {
   let mountedApp;
 
@@ -28,14 +30,14 @@ describe("the App component", () => {
   };
 
   const checkAppHasOnlyOneChild = () => {
-    expect(app().children().length).toEqual(1);
+    expect(app().children().length).toBe(1);
   };
 
   const checkFirstSectionOnlyHasAPEle = () => {
     const sections = app().find("section");
     const wrappingSection = sections.first();
     const pEles = app().find("p");
-    expect(pEles.length).toEqual(wrappingSection.children().length);
+    expect(pEles.length).toBe(wrappingSection.children().length);
   };
 
   describe("while the initial GET request hasn't yet completed", () => {
@@ -77,20 +79,20 @@ describe("the App component", () => {
       test("contains anything else that gets rendered", checkAppHasOnlyOneChild);
       test("always includes a New Task Form component", () => {
         const newTaskForm = app().find(NewTaskForm);
-        expect(newTaskForm.length).toEqual(1);
+        expect(newTaskForm.length).toBe(1);
       });
 
       describe("the New Task Form component", () => {
         test("is passed 3 props", () => {
           const newTaskForm = app().find(NewTaskForm);
           const props = Object.keys(newTaskForm.props());
-          expect(props.length).toEqual(3);
+          expect(props.length).toBe(3);
         });
 
         describe("the value of the newTaskTitle prop", () => {
           test("matches the value held in state", () => {
             const newTaskForm = app().find(NewTaskForm);
-            expect(newTaskForm.props().newTaskTitle).toEqual(app().state().newTaskTitle);
+            expect(newTaskForm.props().newTaskTitle).toBe(app().state().newTaskTitle);
           });
         });
 
@@ -99,7 +101,7 @@ describe("the App component", () => {
             const newTaskForm = app().find(NewTaskForm);
             const update = "A new Task Title";
             newTaskForm.find(".newTaskForm__titleInput").simulate("change", { target: { value: update } });
-            expect(app().state().newTaskTitle).toEqual(update);
+            expect(app().state().newTaskTitle).toBe(update);
           });
         });
         
@@ -122,25 +124,25 @@ describe("the App component", () => {
 
         test("a Task component is rendered", () => {
           const tasks = app().find(Task);
-          expect(tasks.length).toEqual(1);
+          expect(tasks.length).toBe(1);
         });
 
         test("the number of Task components rendered matches the number of task objects returned by the API", () => {
           const tasks = app().find(Task);
-          expect(tasks.length).toEqual(app().state("tasks").length);
+          expect(tasks.length).toBe(app().state("tasks").length);
         });
 
         describe("the Task component", () => {
           test("is passed 3 props", () => {
             const task = app().find(Task);
             const props = Object.keys(task.props());
-            expect(props.length).toEqual(3);
+            expect(props.length).toBe(3);
           });
 
           describe("the values of the task prop", () => {
-            test("match the values held in state", () => {
+            test("reflect the values held in state", () => {
               const task = app().find(Task);
-              expect(task.props().task).toEqual(app().state().tasks[0]);
+              expect(task.props().task).toBe(app().state().tasks[0]);
             });
           });
 
@@ -151,7 +153,7 @@ describe("the App component", () => {
                const task = app().find(Task);
                task.find(".task__title").simulate("change", { target: { name: "task_title", value: update, parentNode: { id: 5 } } });
                const state = app().state().tasks[0];
-               expect(state.task_title).toEqual(update);
+               expect(state.task_title).toBe(update);
             });
           });
         });
