@@ -2,18 +2,7 @@
 node_modules
 
 # misc
-package-lock.json
 .vscode
 
-# temp azure screenshots
-*.PNG
-
-# shell script
-pg_dump_script.sh
-
-# heroku switch notes
-Heroku Postgres Switch Notes.txt
-Heroku Postgres Refactor Issues.txt
-
-# db Connection config
-connectionString.js
+# local db
+localDb
