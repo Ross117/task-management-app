@@ -1,14 +1,20 @@
 import React from "react";
 import "../css/Task.css";
 
-function Task(props) {
-  const {task_id, task_creation_dt, task_title, task_desc, task_completed, task_scheduled_dt, priority_desc} = props.task;
+const Task = (props) => {
+  const {
+    task_id,
+    task_title,
+    task_desc,
+    task_completed,
+    task_scheduled_dt,
+    priority_desc,
+  } = props.task;
   const cleanedScheduledDt = task_scheduled_dt
     ? task_scheduled_dt.substring(0, 10)
     : "";
   const priorityColour =
     priority_desc === "High" ? "task__priority--high" : "task__priority";
-  
   return (
     <div className="task">
       <form id={task_id} autoComplete="off">
@@ -59,6 +65,6 @@ function Task(props) {
       </form>
     </div>
   );
-}
+};
 
 export default Task;

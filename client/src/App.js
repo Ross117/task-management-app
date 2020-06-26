@@ -10,7 +10,7 @@ class App extends Component {
       error: null,
       isFetched: false,
       tasks: [],
-      newTaskTitle: ""
+      newTaskTitle: "",
     };
 
     this.getAllTasks = this.getAllTasks.bind(this);
@@ -23,16 +23,16 @@ class App extends Component {
   getAllTasks = async () => {
     const res = await fetch("/allTasks");
     await res.json().then(
-      data => {
+      (data) => {
         this.setState({
           isFetched: true,
-          tasks: data
+          tasks: data,
         });
       },
-      error => {
+      (error) => {
         this.setState({
           error,
-          isFetched: true
+          isFetched: true,
         });
       }
     );
@@ -53,7 +53,7 @@ class App extends Component {
         : e.target.value;
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
-      method: "PUT"
+      method: "PUT",
     });
   }
 
@@ -66,39 +66,41 @@ class App extends Component {
     if (this.state.tasks.length === 0) {
       biggestTaskID = 0;
     } else {
-      biggestTaskID = this.state.tasks.map(task => {
-        return task.task_id;
-      }).reduce((acc, val) => {
-        if (val > acc) {
-          return val;
-        } else {
-          return acc;
-        } 
-      });
+      biggestTaskID = this.state.tasks
+        .map((task) => {
+          return task.task_id;
+        })
+        .reduce((acc, val) => {
+          if (val > acc) {
+            return val;
+          } else {
+            return acc;
+          }
+        });
     }
 
     const newTaskID = biggestTaskID + 1;
 
     const newTask = {
-      "task_id": newTaskID,
-      "task_creation_dt": "", 
-      "task_title": newTaskTitle, 
-      "task_desc": "", 
-      "task_completed": "", 
-      "task_scheduled_dt": "", 
-      "priority_desc": "Low",
+      task_id: newTaskID,
+      task_creation_dt: "",
+      task_title: newTaskTitle,
+      task_desc: "",
+      task_completed: "",
+      task_scheduled_dt: "",
+      priority_desc: "Low",
     };
-    
+
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
     tasksCopy.push(newTask);
-    
+
     this.setState({ tasks: tasksCopy });
     this.setState({ newTaskTitle: "" });
 
     // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
 
     await fetch(`/addTask/${newTaskTitle}`, {
-      method: "POST"
+      method: "POST",
     });
   };
 
@@ -114,8 +116,8 @@ class App extends Component {
           : false
         : e.target.value;
 
-    const updatedTaskState = this.state.tasks.map(task => {
-      const updateTask = task => {
+    const updatedTaskState = this.state.tasks.map((task) => {
+      const updateTask = (task) => {
         const taskCopy = JSON.parse(JSON.stringify(task));
         taskCopy[fieldToUpdate] = updateValue;
 
@@ -157,7 +159,7 @@ class App extends Component {
         </section>
       );
     } else {
-      const tasks = this.state.tasks.map(task => {
+      const tasks = this.state.tasks.map((task) => {
         return (
           <Task
             key={task.task_id}

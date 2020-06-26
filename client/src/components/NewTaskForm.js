@@ -2,7 +2,7 @@ import React from "react";
 import NewTaskButton from "./NewTaskButton";
 import "../css/NewTaskForm.css";
 
-const NewTaskForm = props => {
+const NewTaskForm = (props) => {
   return (
     <div className="newTaskForm">
       <form>
