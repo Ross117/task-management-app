@@ -1,7 +1,7 @@
 const { Client } = require("pg");
 const localDbConnectionString = require("../../localDb/localDbCredentials");
 
-exports.dbConnection = (clientRes, qry) => {
+module.exports = (clientRes, qry) => {
   let client;
   if (process.env.DATABASE_URL) {
     client = new Client({

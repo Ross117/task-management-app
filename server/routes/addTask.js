@@ -1,6 +1,6 @@
-const dbConnection = require("../dbConnection/dbConnection.js").dbConnection;
+const dbConnection = require("../dbConnection/dbConnection.js");
 
-exports.addTask = (req) => {
+module.exports = (req) => {
   const { taskTitle } = req.params;
 
   const qry =

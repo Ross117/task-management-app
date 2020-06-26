@@ -1,4 +1,4 @@
-const dbConnection = require("../dbConnection/dbConnection.js").dbConnection;
+const dbConnection = require("../dbConnection/dbConnection.js");
 
 function getQrySQL({ taskID, fieldName, newValue }) {
   let qry;
@@ -14,7 +14,7 @@ function getQrySQL({ taskID, fieldName, newValue }) {
   return qry;
 }
 
-exports.amendTask = (req) => {
+module.exports = (req) => {
   const qry = getQrySQL(req.params);
 
   dbConnection(null, qry);

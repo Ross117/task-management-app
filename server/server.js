@@ -1,9 +1,9 @@
 const express = require("express");
 const path = require("path");
 const app = express();
-const getAllTasks = require("./routes/getAllTasks.js").getAllTasks;
-const addTask = require("./routes/addTask.js").addTask;
-const amendTask = require("./routes/amendTask.js").amendTask;
+const getAllTasks = require("./routes/getAllTasks.js");
+const addTask = require("./routes/addTask.js");
+const amendTask = require("./routes/amendTask.js");
 const port = process.env.PORT || 8080;
 
 app.get("/allTasks", (req, res) => {
