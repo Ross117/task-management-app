@@ -4,7 +4,7 @@ const app = express();
 const getAllTasks = require("./routes/getAllTasks.js");
 const addTask = require("./routes/addTask.js");
 const amendTask = require("./routes/amendTask.js");
-const port = process.env.PORT || 8080;
+const port = process.env.PORT;
 
 app.get("/allTasks", (req, res) => {
   getAllTasks(res);

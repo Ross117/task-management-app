@@ -6,3 +6,6 @@ node_modules
 
 # local db
 localDb
+
+# env settings
+.env

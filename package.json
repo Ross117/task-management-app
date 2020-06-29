@@ -4,6 +4,7 @@
   "description": "A simple web-based Task Manager",
   "scripts": {
     "start": "node server/server.js",
+    "start-local": "npx nodemon -r dotenv/config server/server.js",
     "heroku-postbuild": "cd client && npm install && npm install --only=dev --no-shrinkwrap && npm run build",
     "client": "cd client && npm start",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,6 +16,7 @@
     "pg": "^8.0.2"
   },
   "devDependencies": {
+    "dotenv": "^8.2.0",
     "nodemon": "^1.19.4"
   },
   "repository": {
