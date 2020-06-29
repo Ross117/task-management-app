@@ -1,16 +1,16 @@
 const { Client } = require("pg");
-const localDbConnectionString = require("../../localDb/localDbCredentials");
 
 module.exports = (clientRes, qry) => {
   let client;
-  if (process.env.DATABASE_URL) {
+
+  if (process.env.NODE_ENV === "development") {
     client = new Client({
       connectionString: process.env.DATABASE_URL,
-      ssl: { rejectUnauthorized: false },
     });
   } else {
     client = new Client({
-      connectionString: localDbConnectionString,
+      connectionString: process.env.DATABASE_URL,
+      ssl: { rejectUnauthorized: false },
     });
   }
 
