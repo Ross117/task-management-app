@@ -110,11 +110,7 @@ class App extends Component {
     let updateValue;
 
     updateValue =
-      fieldToUpdate === "task_completed"
-        ? e.target.checked
-          ? true
-          : false
-        : e.target.value;
+      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
 
     const updatedTaskState = this.state.tasks.map((task) => {
       const updateTask = (task) => {
