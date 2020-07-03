@@ -1,13 +1,16 @@
 .newTaskForm {
+  position: relative;
   width: 100%;
-  max-width: 40rem;
+  max-width: 50rem;
   margin-top: 1rem;
   margin-bottom: 2rem;
   padding: 1rem;
   border: 0.2rem solid #f2f2f2;
+  border-radius: 1rem;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 #c1ccc6;
   background-color: white; }
   .newTaskForm .newTaskForm__titleInput {
-    font-size: 2rem;
+    width: 70%;
+    font-size: 1.75rem;
     border: none;
-    width: 70%; }
+    outline: none; }

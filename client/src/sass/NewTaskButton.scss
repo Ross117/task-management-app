@@ -2,11 +2,15 @@ $colour-blue: rgb(47, 131, 228);
 $colour-blue-dark: rgb(26, 70, 121);
 
 .newTaskButton {
+  position: absolute;
+  right: 1rem;
+  bottom: 0.1rem;
   margin: 0.5rem;
-  padding: 1rem;
+  padding: 0.6rem;
   font-size: 1.5rem;
   background-color: $colour-blue;
   border: none;
+  border-radius: 0.5rem;
 
   &:hover {
     background-color: $colour-blue-dark;
