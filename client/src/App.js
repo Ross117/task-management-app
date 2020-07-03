@@ -46,11 +46,7 @@ class App extends Component {
     if (fieldToUpdate === "task_title" && updateValue === "") return;
 
     updateValue =
-      fieldToUpdate === "task_completed"
-        ? e.target.checked
-          ? true
-          : false
-        : e.target.value;
+      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
