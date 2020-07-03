@@ -163,12 +163,12 @@ class App extends Component {
       });
       return (
         <section className="tasksContainer">
-          {tasks}
           <NewTaskForm
             newTaskTitle={this.state.newTaskTitle}
             handleNewTaskChange={this.handleNewTaskChange}
             postNewTask={this.postNewTask}
           />
+          {tasks}
         </section>
       );
     }
