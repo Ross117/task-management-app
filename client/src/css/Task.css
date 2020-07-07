@@ -1,6 +1,6 @@
 .task {
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 50rem;
   margin-top: 1rem;
   padding: 1rem;
@@ -8,6 +8,8 @@
   border-radius: 1rem;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 #c1ccc6;
   background-color: white; }
+  .task:last-child {
+    margin-bottom: 1rem; }
   .task:hover {
     box-shadow: -0.5rem 0.5rem 0.8rem 0 #343a40; }
   .task input, .task select {

@@ -6,7 +6,7 @@ $colour-red: rgb(220, 88, 88);
 
 .task {
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 50rem;
   margin-top: 1rem;
   padding: 1rem;
@@ -14,6 +14,10 @@ $colour-red: rgb(220, 88, 88);
   border-radius: 1rem;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-grey-light;
   background-color: $colour-white;
+
+  &:last-child {
+    margin-bottom: 1rem;
+  }
 
   &:hover {
     box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-grey-dark; 
