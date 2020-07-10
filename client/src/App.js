@@ -88,7 +88,7 @@ class App extends Component {
     };
 
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
-    tasksCopy.push(newTask);
+    tasksCopy.unshift(newTask);
 
     this.setState({ tasks: tasksCopy });
     this.setState({ newTaskTitle: "" });
