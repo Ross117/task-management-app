@@ -33,7 +33,7 @@ describe("the Task component", () => {
   describe("when the component is rendered", () => {
     test("it returns a div", () => {
       const div = task().find("div");
-      expect(div.length).toBe(1);
+      expect(div.length).toBeGreaterThan(0);
     });
 
     describe("the div", () => {
@@ -46,9 +46,13 @@ describe("the Task component", () => {
       });
 
       describe("the form", () => {
-        test("contains 4 input elements", () => {
+        test("contains 3 input elements", () => {
           const form = task().find("form");
-          expect(form.children("input").length).toBe(4);
+          expect(form.children("input").length).toBe(3);
+        });
+        test("contains 1 div element", () => {
+          const form = task().find("form");
+          expect(form.children("div").length).toBe(1);
         });
         test("contains 1 select element", () => {
           const form = task().find("form");

@@ -34,10 +34,11 @@ const Task = (props) => {
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
-        <input
+        <div
           className="task__desc"
           type="text"
           name="task_desc"
+          contentEditable="true"
           placeholder="..."
           value={task_desc}
           onChange={props.handleTaskUpdate}
