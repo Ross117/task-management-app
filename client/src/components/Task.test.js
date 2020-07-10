@@ -33,7 +33,7 @@ describe("the Task component", () => {
   describe("when the component is rendered", () => {
     test("it returns a div", () => {
       const div = task().find("div");
-      expect(div.length).toBeGreaterThan(0);
+      expect(div.length).toBe(1);
     });
 
     describe("the div", () => {
@@ -50,9 +50,9 @@ describe("the Task component", () => {
           const form = task().find("form");
           expect(form.children("input").length).toBe(3);
         });
-        test("contains 1 div element", () => {
+        test("contains 1 textarea element", () => {
           const form = task().find("form");
-          expect(form.children("div").length).toBe(1);
+          expect(form.children("textarea").length).toBe(1);
         });
         test("contains 1 select element", () => {
           const form = task().find("form");
@@ -108,7 +108,7 @@ describe("the Task component", () => {
       });
     });
 
-    describe("the Task Desc input element", () => {
+    describe("the Task Desc textarea element", () => {
       test("has a value which matches the task.task_desc prop", () => {
         const taskDescInput = task().find(".task__desc");
         const taskDescProp = task().props().task.task_desc;

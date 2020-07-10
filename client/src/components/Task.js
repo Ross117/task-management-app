@@ -34,11 +34,12 @@ const Task = (props) => {
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
-        <div
+        <textarea
           className="task__desc"
           type="text"
           name="task_desc"
-          contentEditable="true"
+          rows="5"
+          cols="20"
           placeholder="..."
           value={task_desc}
           onChange={props.handleTaskUpdate}
