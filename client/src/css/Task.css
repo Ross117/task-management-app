@@ -25,7 +25,8 @@
     width: 90%;
     font-size: 1.2rem;
     font-family: inherit;
-    outline: none; }
+    outline: none;
+    resize: none; }
   .task .task__completed {
     position: absolute;
     top: 1rem;
