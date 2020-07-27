@@ -45,10 +45,18 @@ class App extends Component {
 
     if (fieldToUpdate === "task_title" && updateValue === "") return;
 
-    updateValue =
-      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
+    // will there be a problem with reading state that hasn't updated?
+    this.state.tasks.forEach((val) => {
+      if (val.task_id === taskID) updateValue = val[fieldToUpdate];
+    });
 
-    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
+    const cleanUpdateValue = (updateValue) => {
+      return updateValue;
+    };
+
+    const cleanedUpdateValue = cleanUpdateValue(updateValue);
+
+    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${cleanedUpdateValue}`, {
       method: "PUT",
     });
   }
@@ -90,8 +98,10 @@ class App extends Component {
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
     tasksCopy.unshift(newTask);
 
-    this.setState({ tasks: tasksCopy });
-    this.setState({ newTaskTitle: "" });
+    this.setState({ 
+      tasks: tasksCopy,
+      newTaskTitle: "",
+    });
 
     // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
 
