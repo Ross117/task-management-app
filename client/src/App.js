@@ -43,20 +43,30 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
-    if (fieldToUpdate === "task_title" && updateValue === "") return;
+    // need to allow user to delete task desc - currently throws a console error
 
-    // will there be a problem with reading state that hasn't updated?
     this.state.tasks.forEach((val) => {
       if (val.task_id === taskID) updateValue = val[fieldToUpdate];
     });
 
-    const cleanUpdateValue = (updateValue) => {
-      return updateValue;
+    if (fieldToUpdate === "task_title" && updateValue === "") return;
+
+    const encodeUpdateValue = (updateValue) => {
+      const encodedStr = updateValue
+        .replace(/[\n]/g, "%0A")
+        .replace(/\//g, "%2f")
+        .replace(/\?/g, "%3f");
+
+      return encodedStr;
     };
 
-    const cleanedUpdateValue = cleanUpdateValue(updateValue);
+    if (fieldToUpdate === "task_title" || fieldToUpdate === "task_desc") {
+      updateValue = encodeUpdateValue(updateValue);
+    }
 
-    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${cleanedUpdateValue}`, {
+    console.log(updateValue)
+
+    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
     });
   }
@@ -98,7 +108,7 @@ class App extends Component {
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
     tasksCopy.unshift(newTask);
 
-    this.setState({ 
+    this.setState({
       tasks: tasksCopy,
       newTaskTitle: "",
     });
