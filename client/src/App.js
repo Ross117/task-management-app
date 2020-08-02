@@ -53,18 +53,22 @@ class App extends Component {
 
     const encodeUpdateValue = (updateValue) => {
       const encodedStr = updateValue
+        .replace(/%/g, "%25")
         .replace(/[\n]/g, "%0A")
         .replace(/\//g, "%2f")
-        .replace(/\?/g, "%3f");
+        .replace(/\\/g, "%5C")
+        .replace(/\?/g, "%3f")
+        .replace(/'/g, "''")
+        .replace(/#/g, "%23");
 
       return encodedStr;
     };
 
     if (fieldToUpdate === "task_title" || fieldToUpdate === "task_desc") {
       updateValue = encodeUpdateValue(updateValue);
-    }
 
-    console.log(updateValue)
+      if (updateValue === "") updateValue = "NULL";
+    }
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
@@ -114,6 +118,9 @@ class App extends Component {
     });
 
     // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
+
+    // or what if it just returned the id of the newly created class, which I could use to solve the problem that updates
+    // don't work
 
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST",
