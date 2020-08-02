@@ -43,10 +43,32 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
+    // need to allow user to delete task desc - currently throws a console error
+
+    this.state.tasks.forEach((val) => {
+      if (val.task_id === taskID) updateValue = val[fieldToUpdate];
+    });
+
     if (fieldToUpdate === "task_title" && updateValue === "") return;
 
-    updateValue =
-      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
+    const encodeUpdateValue = (updateValue) => {
+      const encodedStr = updateValue
+        .replace(/%/g, "%25")
+        .replace(/[\n]/g, "%0A")
+        .replace(/\//g, "%2f")
+        .replace(/\\/g, "%5C")
+        .replace(/\?/g, "%3f")
+        .replace(/'/g, "''")
+        .replace(/#/g, "%23");
+
+      return encodedStr;
+    };
+
+    if (fieldToUpdate === "task_title" || fieldToUpdate === "task_desc") {
+      updateValue = encodeUpdateValue(updateValue);
+
+      if (updateValue === "") updateValue = "NULL";
+    }
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
@@ -90,10 +112,15 @@ class App extends Component {
     const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
     tasksCopy.unshift(newTask);
 
-    this.setState({ tasks: tasksCopy });
-    this.setState({ newTaskTitle: "" });
+    this.setState({
+      tasks: tasksCopy,
+      newTaskTitle: "",
+    });
 
     // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
+
+    // or what if it just returned the id of the newly created class, which I could use to solve the problem that updates
+    // don't work
 
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST",
