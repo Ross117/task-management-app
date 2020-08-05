@@ -38,7 +38,7 @@ const Task = (props) => {
           className="task__desc"
           type="text"
           name="task_desc"
-          rows="5"
+          rows="3"
           cols="20"
           placeholder="..."
           value={task_desc}
