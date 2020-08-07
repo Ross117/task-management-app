@@ -19,8 +19,16 @@ function getQrySQL({ taskID, fieldName, newValue }) {
   return qry;
 }
 
-module.exports = (req) => {
+module.exports = (req, res) => {
   const qry = getQrySQL(req.params);
+  const client = dbConnection();
 
-  dbConnection(null, qry);
+  client.query(qry, (err) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.sendStatus(200);
+    }
+    client.end();
+  });
 };

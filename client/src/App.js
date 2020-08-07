@@ -43,8 +43,6 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
-    // need to allow user to delete task desc - currently throws a console error
-
     this.state.tasks.forEach((val) => {
       if (val.task_id === taskID) updateValue = val[fieldToUpdate];
     });
@@ -77,54 +75,14 @@ class App extends Component {
 
   postNewTask = async () => {
     const newTaskTitle = this.state.newTaskTitle;
-    let biggestTaskID;
-
+    
     if (newTaskTitle === "") return;
-
-    if (this.state.tasks.length === 0) {
-      biggestTaskID = 0;
-    } else {
-      biggestTaskID = this.state.tasks
-        .map((task) => {
-          return task.task_id;
-        })
-        .reduce((acc, val) => {
-          if (val > acc) {
-            return val;
-          } else {
-            return acc;
-          }
-        });
-    }
-
-    const newTaskID = biggestTaskID + 1;
-
-    const newTask = {
-      task_id: newTaskID,
-      task_creation_dt: "",
-      task_title: newTaskTitle,
-      task_desc: "",
-      task_completed: "",
-      task_scheduled_dt: "",
-      priority_desc: "Low",
-    };
-
-    const tasksCopy = JSON.parse(JSON.stringify(this.state.tasks));
-    tasksCopy.unshift(newTask);
-
-    this.setState({
-      tasks: tasksCopy,
-      newTaskTitle: "",
-    });
-
-    // what if the addTask API call returned the updated tasks data? Could then use it to setState, triggering re-render
-
-    // or what if it just returned the id of the newly created class, which I could use to solve the problem that updates
-    // don't work
 
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST",
-    });
+    })
+      .then(() => this.setState({ newTaskTitle: "" }))
+      .then(() => this.getAllTasks());
   };
 
   handleTaskUpdate(e) {

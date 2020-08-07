@@ -1,6 +1,6 @@
 const { Client } = require("pg");
 
-module.exports = (clientRes, qry) => {
+module.exports = () => {
   let client;
 
   if (process.env.NODE_ENV === "development") {
@@ -16,8 +16,5 @@ module.exports = (clientRes, qry) => {
 
   client.connect();
 
-  client.query(qry, (err, qryRes) => {
-    if (clientRes) clientRes.send(JSON.stringify(qryRes.rows));
-    client.end();
-  });
+  return client;
 };

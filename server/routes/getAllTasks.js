@@ -1,6 +1,6 @@
 const dbConnection = require("../dbConnection/dbConnection.js");
 
-module.exports = (clientRes) => {
+module.exports = (res) => {
   const qry = 
     `SELECT task_id, 
             task_creation_dt, 
@@ -13,5 +13,14 @@ module.exports = (clientRes) => {
      LEFT JOIN task_priorities ON tasks.priority_id = task_priorities.priority_id 
      ORDER BY task_id DESC;`;
 
-  dbConnection(clientRes, qry);
+  const client = dbConnection();
+
+  client.query(qry, (err, qryResults) => {
+    if (err) {
+      res.sendStatus(500);
+    } else {
+      res.status(200).send(JSON.stringify(qryResults.rows));
+    }
+    client.end();
+  });
 };

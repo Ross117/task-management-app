@@ -6,22 +6,22 @@ const addTask = require("./routes/addTask.js");
 const amendTask = require("./routes/amendTask.js");
 const port = process.env.PORT;
 
-app.get("/allTasks", (req, res) => {
+app.get("/allTasks", (_req, res) => {
   getAllTasks(res);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req) => {
-  amendTask(req);
+app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req, res) => {
+  amendTask(req, res);
 });
 
 app.post("/addTask/:taskTitle", (req, res) => {
-  addTask(req);
+  addTask(req, res);
 });
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../client/build")));
 
-  app.get("*", (req, res) => {
+  app.get("*", (_req, res) => {
     res.sendFile(path.join(__dirname, "../client/build", "index.html"));
   });
 }
