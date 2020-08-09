@@ -3,7 +3,6 @@ import { mount } from "enzyme";
 import App from "./App";
 import Task from "./components/Task";
 import NewTaskForm from "./components/NewTaskForm";
-import NewTaskButton from "./components/NewTaskButton";
 
 describe("the App component", () => {
   let mountedApp;
@@ -97,30 +96,6 @@ describe("the App component", () => {
             const update = "A new Task Title";
             newTaskForm.find(".newTaskForm__titleInput").simulate("change", { target: { value: update } });
             expect(app().state().newTaskTitle).toBe(update);
-          });
-        });
-
-        describe("when the user clicks the Add Task button", () => {
-          test("state is not updated if the Task Title is empty", () => {
-            const newTaskButton = app().find(NewTaskButton);
-            newTaskButton.simulate("click");
-            expect(app().state("tasks").length).toBe(0);
-          });
-
-          describe("if the Task Title is not empty", () => {
-            beforeEach(() => {
-              const newTaskForm = app().find(NewTaskForm);
-              const update = "A new Task Title";
-              newTaskForm.find(".newTaskForm__titleInput").simulate("change", { target: { value: update } });
-              const newTaskButton = app().find(NewTaskButton);
-              newTaskButton.find(".newTaskButton").simulate("click");
-            });
-            test("state is updated with the new task", () => {
-              expect(app().state("tasks").length).toBe(1);
-            });
-            test("the newTaskTitle property held in state is reset to an empty string", () => {
-              expect(app().state("newTaskTitle")).toBe("");
-            });
           });
         });
       });
