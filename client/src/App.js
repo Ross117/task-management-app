@@ -5,7 +5,7 @@ import "./css/App.css";
 
 class App extends Component {
   constructor(props) {
-    super(props);
+    super();
     this.state = {
       error: null,
       isFetched: false,
@@ -22,20 +22,18 @@ class App extends Component {
 
   getAllTasks = async () => {
     const res = await fetch("/allTasks");
-    await res.json().then(
-      (data) => {
-        this.setState({
-          isFetched: true,
-          tasks: data,
-        });
-      },
-      (error) => {
-        this.setState({
-          error,
-          isFetched: true,
-        });
-      }
-    );
+    try {
+      const data = await res.json();
+      this.setState({
+        isFetched: true,
+        tasks: data,
+      });
+    } catch (error) {
+      this.setState({
+        error,
+        isFetched: true,
+      });
+    }
   };
 
   putTaskUpdate(e) {
@@ -75,14 +73,15 @@ class App extends Component {
 
   postNewTask = async () => {
     const newTaskTitle = this.state.newTaskTitle;
-    
+
     if (newTaskTitle === "") return;
 
     await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST",
     })
-      .then(() => this.setState({ newTaskTitle: "" }))
-      .then(() => this.getAllTasks());
+    
+    this.setState({ newTaskTitle: "" });
+    this.getAllTasks();
   };
 
   handleTaskUpdate(e) {
