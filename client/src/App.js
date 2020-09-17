@@ -18,9 +18,10 @@ class App extends Component {
     this.handleTaskUpdate = this.handleTaskUpdate.bind(this);
     this.handleNewTaskChange = this.handleNewTaskChange.bind(this);
     this.postNewTask = this.postNewTask.bind(this);
+    this.deleteTask = this.deleteTask.bind(this);
   }
 
-  getAllTasks = async () => {
+  async getAllTasks() {
     const res = await fetch("/allTasks");
     try {
       const data = await res.json();
@@ -34,7 +35,33 @@ class App extends Component {
         isFetched: true,
       });
     }
-  };
+  }
+
+  handleTaskUpdate(e) {
+    const taskID = Number(e.target.parentNode.id);
+    const fieldToUpdate = e.target.name;
+    let updateValue;
+
+    updateValue =
+      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
+
+    const updatedTaskState = this.state.tasks.map((task) => {
+      const updateTask = (task) => {
+        const taskCopy = JSON.parse(JSON.stringify(task));
+        taskCopy[fieldToUpdate] = updateValue;
+
+        return taskCopy;
+      };
+
+      if (task.task_id === taskID) {
+        return updateTask(task);
+      } else {
+        return task;
+      }
+    });
+
+    this.setState({ tasks: updatedTaskState });
+  }
 
   putTaskUpdate(e) {
     const taskID = Number(e.target.parentNode.id);
@@ -71,49 +98,37 @@ class App extends Component {
     });
   }
 
-  postNewTask = async () => {
-    const newTaskTitle = this.state.newTaskTitle;
+  async deleteTask(e) {
+    const response = window.confirm(
+      "Are you sure that you want to delete this task?"
+    );
 
-    if (newTaskTitle === "") return;
-
-    await fetch(`/addTask/${newTaskTitle}`, {
-      method: "POST",
-    })
-    
-    this.setState({ newTaskTitle: "" });
-    this.getAllTasks();
-  };
-
-  handleTaskUpdate(e) {
-    const taskID = Number(e.target.parentNode.id);
-    const fieldToUpdate = e.target.name;
-    let updateValue;
-
-    updateValue =
-      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
-
-    const updatedTaskState = this.state.tasks.map((task) => {
-      const updateTask = (task) => {
-        const taskCopy = JSON.parse(JSON.stringify(task));
-        taskCopy[fieldToUpdate] = updateValue;
-
-        return taskCopy;
-      };
-
-      if (task.task_id === taskID) {
-        return updateTask(task);
-      } else {
-        return task;
-      }
-    });
-
-    this.setState({ tasks: updatedTaskState });
+    if (response) {
+      const taskID = Number(e.target.parentNode.id);
+      await fetch(`/deleteTask/${taskID}`, {
+        method: "DELETE",
+      });
+      this.getAllTasks();
+    }
   }
 
   handleNewTaskChange(e) {
     const newTaskTitle = e.target.value;
 
     this.setState({ newTaskTitle });
+  }
+
+  async postNewTask() {
+    const newTaskTitle = this.state.newTaskTitle;
+
+    if (newTaskTitle === "") return;
+
+    await fetch(`/addTask/${newTaskTitle}`, {
+      method: "POST",
+    });
+
+    this.setState({ newTaskTitle: "" });
+    this.getAllTasks();
   }
 
   componentDidMount() {
@@ -142,6 +157,7 @@ class App extends Component {
             task={task}
             handleTaskUpdate={this.handleTaskUpdate}
             putTaskUpdate={this.putTaskUpdate}
+            deleteTask={this.deleteTask}
           />
         );
       });

@@ -64,6 +64,13 @@ const Task = (props) => {
           <option>Medium</option>
           <option>Low</option>
         </select>
+        <button
+          className="task__deleteBtn"
+          type="button"
+          onClick={props.deleteTask}
+        >
+          Delete  
+        </button>
       </form>
     </div>
   );
