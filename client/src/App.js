@@ -98,13 +98,12 @@ class App extends Component {
     });
   }
 
-  async deleteTask(e) {
+  async deleteTask(taskID) {
     const response = window.confirm(
       "Are you sure that you want to delete this task?"
     );
 
     if (response) {
-      const taskID = Number(e.target.parentNode.id);
       await fetch(`/deleteTask/${taskID}`, {
         method: "DELETE",
       });

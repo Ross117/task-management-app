@@ -65,7 +65,7 @@ const Task = (props) => {
           <option>Medium</option>
           <option>Low</option>
         </select>
-        <DeleteTaskButton deleteTask={props.deleteTask} />
+        <DeleteTaskButton deleteTask={props.deleteTask} taskID={task_id} />
       </form>
     </div>
   );

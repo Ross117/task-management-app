@@ -1,0 +1,7 @@
+.deleteTaskButton {
+  position: absolute;
+  background-color: white;
+  border: none;
+  font-size: 1.5rem;
+  left: 15rem;
+  bottom: 1.5rem; }
