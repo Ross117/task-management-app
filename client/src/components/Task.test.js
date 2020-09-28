@@ -1,6 +1,7 @@
 import React from "react";
 import { mount } from "enzyme";
 import Task from "./Task";
+import DeleteTaskButton from "./DeleteTaskButton";
 
 describe("the Task component", () => {
   let mountedTask;
@@ -57,6 +58,10 @@ describe("the Task component", () => {
         test("contains 1 select element", () => {
           const form = task().find("form");
           expect(form.children("select").length).toBe(1);
+        });
+        test("contains a Delete Task Button component", () => {
+          const form = task().find("form");
+          expect(form.find(DeleteTaskButton).length).toBe(1);
         });
       });
     });
@@ -175,6 +180,21 @@ describe("the Task component", () => {
       describe("when the onBlur event is fired", () => {
         test("the putTaskUpdate function is called", () => {
           checkEventTriggersFnCall("select[name='priority_desc']", "blur", "putTaskUpdate");
+        });
+      });
+    });
+    
+    describe("the Delete Task Button component", () => {
+      test("is passed 2 props", () => {
+        const deleteTaskButton = task().find(DeleteTaskButton);
+        const props = Object.keys(deleteTaskButton.props());
+        expect(props.length).toBe(2);
+      });
+
+      describe("the value of the taskID prop", () => {
+        test("matches that of the task_id prop received by the Task component", () => {
+          const deleteTaskButton = task().find(DeleteTaskButton);
+          expect(deleteTaskButton.props().taskID).toBe(task().props().task.task_id);
         });
       });
     });

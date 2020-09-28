@@ -125,10 +125,10 @@ describe("the App component", () => {
         });
 
         describe("the Task component", () => {
-          test("is passed 3 props", () => {
+          test("is passed 4 props", () => {
             const task = app().find(Task);
             const props = Object.keys(task.props());
-            expect(props.length).toBe(3);
+            expect(props.length).toBe(4);
           });
 
           describe("the values of the task prop", () => {
