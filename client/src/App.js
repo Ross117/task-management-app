@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Task from "./components/Task";
 import NewTaskForm from "./components/NewTaskForm";
 import "./css/App.css";
+import encodeUpdateValue from "./utilityFunctions";
 
 class App extends Component {
   constructor(props) {
@@ -74,19 +75,6 @@ class App extends Component {
 
     if (fieldToUpdate === "task_title" && updateValue === "") return;
 
-    const encodeUpdateValue = (updateValue) => {
-      const encodedStr = updateValue
-        .replace(/%/g, "%25")
-        .replace(/[\n]/g, "%0A")
-        .replace(/\//g, "%2f")
-        .replace(/\\/g, "%5C")
-        .replace(/\?/g, "%3f")
-        .replace(/'/g, "''")
-        .replace(/#/g, "%23");
-
-      return encodedStr;
-    };
-
     if (fieldToUpdate === "task_title" || fieldToUpdate === "task_desc") {
       updateValue = encodeUpdateValue(updateValue);
 
@@ -118,7 +106,7 @@ class App extends Component {
   }
 
   async postNewTask() {
-    const newTaskTitle = this.state.newTaskTitle;
+    const newTaskTitle = encodeUpdateValue(this.state.newTaskTitle);
 
     if (newTaskTitle === "") return;
 
