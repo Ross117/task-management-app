@@ -4,26 +4,26 @@ import "../css/Task.css";
 
 const Task = (props) => {
   const {
-    task_id,
-    task_title,
-    task_desc,
-    task_completed,
-    task_scheduled_dt,
-    priority_desc,
+    task_id: taskID,
+    task_title: taskTitle,
+    task_desc: taskDesc,
+    task_completed: taskCompleted,
+    task_scheduled_dt: taskScheduledDt,
+    priority_desc: priorityDesc,
   } = props.task;
-  const cleanedScheduledDt = task_scheduled_dt
-    ? task_scheduled_dt.substring(0, 10)
+  const cleanedScheduledDt = taskScheduledDt
+    ? taskScheduledDt.substring(0, 10)
     : "";
   const priorityColour =
-    priority_desc === "High" ? "task__priority--high" : "task__priority";
+    priorityDesc === "High" ? "task__priority--high" : "task__priority";
   return (
     <div className="task">
-      <form id={task_id} autoComplete="off">
+      <form id={taskID} autoComplete="off">
         <input
           className="task__title"
           type="text"
           name="task_title"
-          value={task_title}
+          value={taskTitle}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -31,7 +31,7 @@ const Task = (props) => {
           className="task__completed"
           type="checkbox"
           name="task_completed"
-          checked={task_completed}
+          checked={taskCompleted}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -42,7 +42,7 @@ const Task = (props) => {
           rows="3"
           cols="20"
           placeholder="..."
-          value={task_desc}
+          value={taskDesc}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         />
@@ -57,7 +57,7 @@ const Task = (props) => {
         <select
           className={priorityColour}
           name="priority_desc"
-          value={priority_desc}
+          value={priorityDesc}
           onChange={props.handleTaskUpdate}
           onBlur={props.putTaskUpdate}
         >
@@ -65,7 +65,7 @@ const Task = (props) => {
           <option>Medium</option>
           <option>Low</option>
         </select>
-        <DeleteTaskButton deleteTask={props.deleteTask} taskID={task_id} />
+        <DeleteTaskButton deleteTask={props.deleteTask} taskID={taskID} />
       </form>
     </div>
   );
