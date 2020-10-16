@@ -154,24 +154,20 @@ describe("the App component", () => {
             const task = app().find(Task).first();
             const taskID = app().state().tasks[0].task_id;
             name === "task_completed"
-              ? task
-                  .find(selector)
-                  .simulate("change", {
-                    target: {
-                      name: name,
-                      checked: update,
-                      parentNode: { id: taskID },
-                    },
-                  })
-              : task
-                  .find(selector)
-                  .simulate("change", {
-                    target: {
-                      name: name,
-                      value: update,
-                      parentNode: { id: taskID },
-                    },
-                  });
+              ? task.find(selector).simulate("change", {
+                  target: {
+                    name: name,
+                    checked: update,
+                    parentNode: { id: taskID },
+                  },
+                })
+              : task.find(selector).simulate("change", {
+                  target: {
+                    name: name,
+                    value: update,
+                    parentNode: { id: taskID },
+                  },
+                });
             const state = app().state().tasks[0];
             expect(state[name]).toBe(update);
           };
@@ -236,9 +232,7 @@ describe("the App component", () => {
 
           const checkTaskStateOrder = (value, sortedArr) => {
             const sortBy = app().find(SortBy);
-            sortBy
-            .find(".sortBy__select")
-            .simulate("change", {
+            sortBy.find(".sortBy__select").simulate("change", {
               target: {
                 value: value,
               },
@@ -250,20 +244,100 @@ describe("the App component", () => {
           describe("when the user sorts by Task Scheduled Date in ascending order", () => {
             test("App.tasks state is sorted by Scheduled Date in ascending order", () => {
               const state = app().state().tasks;
-              const sortedArr = [state[2], state[4], state[3], state[0], state[1]];
+              const sortedArr = [
+                state[2],
+                state[3],
+                state[0],
+                state[4],
+                state[1],
+              ];
               checkTaskStateOrder("Scheduled Date (Ascending)", sortedArr);
             });
 
-            // test how it handles null values?
-            //   - if there are some, place at end
-            //   - if all values are null, don't change anything
+            describe("if one or more Scheduled Dates have null values", () => {
+              test("they are placed at the end of App.tasks state", () => {
+                const state = app().state().tasks;
+                const stateWithNulls = state.map(val, (ind) => {
+                  if (ind % 2 === 0) {
+                    val.task_scheduled_dt = null;
+                  }
+                  return val;
+                });
+                app().setState({ tasks: stateWithNulls });
+                const sortedArr = [
+                  stateWithNulls[3],
+                  stateWithNulls[0],
+                  stateWithNulls[1],
+                  stateWithNulls[2],
+                  stateWithNulls[4],
+                ];
+                checkTaskStateOrder("Scheduled Date (Ascending)", sortedArr);
+              });
+            });
+
+            describe("if all Scheduled Dates have null values", () => {
+              test("The order of App.tasks state is unchanged", () => {
+                const state = app().state().tasks;
+                const stateAllNulls = state.map((val) => {
+                  val.task_scheduled_dt = null;
+                  return val;
+                });
+                app().setState({ tasks: stateAllNulls });
+                checkTaskStateOrder(
+                  "Scheduled Date (Ascending)",
+                  stateAllNulls
+                );
+              });
+            });
           });
 
           describe("when the user sorts by Task Scheduled Date in descending order", () => {
             test("App.tasks state is sorted by Scheduled Date in descending order", () => {
               const state = app().state().tasks;
-              const sortedArr = [state[1], state[0], state[3], state[4], state[2]];
+              const sortedArr = [
+                state[1],
+                state[4],
+                state[0],
+                state[3],
+                state[2],
+              ];
               checkTaskStateOrder("Scheduled Date (Descending)", sortedArr);
+            });
+
+            describe("if one or more Scheduled Dates have null values", () => {
+              test("they are placed at the end of App.tasks state", () => {
+                const state = app().state().tasks;
+                const stateWithNulls = state.map(val, (ind) => {
+                  if (ind % 2 === 0) {
+                    val.task_scheduled_dt = null;
+                  }
+                  return val;
+                });
+                app().setState({ tasks: stateWithNulls });
+                const sortedArr = [
+                  stateWithNulls[1],
+                  stateWithNulls[0],
+                  stateWithNulls[3],
+                  stateWithNulls[2],
+                  stateWithNulls[4],
+                ];
+                checkTaskStateOrder("Scheduled Date (Descending)", sortedArr);
+              });
+            });
+
+            describe("if all Scheduled Dates have null values", () => {
+              test("The order of App.tasks state is unchanged", () => {
+                const state = app().state().tasks;
+                const stateAllNulls = state.map((val) => {
+                  val.task_scheduled_dt = null;
+                  return val;
+                });
+                app().setState({ tasks: stateAllNulls });
+                checkTaskStateOrder(
+                  "Scheduled Date (Descending)",
+                  stateAllNulls
+                );
+              });
             });
           });
         });
