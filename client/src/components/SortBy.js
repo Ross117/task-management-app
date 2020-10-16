@@ -9,9 +9,6 @@ import "../css/SortBy.css";
 
 // shouldn't render when there are no tasks (later: what about if no due dates?)
 
-// what will the sort option look like on the page?
-// - drop down
-
 // I think the component should have state - to store which option user has selected
 
 // User option change will fire function which reorders app state
@@ -23,12 +20,35 @@ import "../css/SortBy.css";
 class SortBy extends Component {
   constructor(props) {
     super();
-    this.state = {};
+    this.state = {
+      selected: "",
+    };
+
+    this.onChange = this.onChange.bind(this);
+  }
+
+  onChange(e) {
+    const newValue = e.target.value;
+    this.setState({ selected: newValue });
+    this.props.reorderTasks(newValue);
   }
 
   render() {
     return (
-      <div></div>
+      <div className="sortBy">
+        <label className="sortBy__label">
+          Sort By
+          <select
+            className="sortBy__dropdown"
+            value={this.state.selected}
+            onChange={this.onChange}
+          >
+            <option></option>
+            <option>Scheduled Date (Ascending)</option>
+            <option>Scheduled Date (Descending)</option>
+          </select>
+        </label>
+      </div>
     );
   }
 }

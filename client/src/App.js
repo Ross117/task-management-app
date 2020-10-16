@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import Task from "./components/Task";
 import NewTaskForm from "./components/NewTaskForm";
+import SortBy from "./components/SortBy";
 import "./css/App.css";
 import encodeUpdateValue from "./utilityFunctions";
 
@@ -20,6 +21,7 @@ class App extends Component {
     this.handleNewTaskChange = this.handleNewTaskChange.bind(this);
     this.postNewTask = this.postNewTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
+    this.reorderTasks = this.reorderTasks.bind(this);
   }
 
   async getAllTasks() {
@@ -118,6 +120,10 @@ class App extends Component {
     this.getAllTasks();
   }
 
+  reorderTasks(order) {
+    return order;
+  }
+
   componentDidMount() {
     this.getAllTasks();
   }
@@ -155,6 +161,7 @@ class App extends Component {
             handleNewTaskChange={this.handleNewTaskChange}
             postNewTask={this.postNewTask}
           />
+          <SortBy reorderTasks={this.reorderTasks} />
           {tasks}
         </section>
       );

@@ -1,0 +1,10 @@
+.sortBy {
+  width: 95%;
+  max-width: 50rem;
+  font-size: 1.5rem; }
+  .sortBy .sortBy__label {
+    font-weight: bold; }
+  .sortBy .sortBy__dropdown {
+    margin: 1rem 0 1rem 1rem;
+    font-size: 1.5rem;
+    padding: 0.2rem; }
