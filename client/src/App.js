@@ -79,9 +79,9 @@ class App extends Component {
 
     if (fieldToUpdate === "task_title" || fieldToUpdate === "task_desc") {
       updateValue = encodeUpdateValue(updateValue);
-
-      if (updateValue === "") updateValue = "NULL";
     }
+
+    if (updateValue === "") updateValue = "NULL";
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
