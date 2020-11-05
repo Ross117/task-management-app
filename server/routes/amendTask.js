@@ -11,9 +11,15 @@ function getQrySQL({ taskID, fieldName, newValue }) {
          WHERE task_priorities.priority_desc = '${newValue}') 
        WHERE tasks.task_id = ${taskID};`;
   } else {
-    qry = `UPDATE tasks 
-       SET ${fieldName} = '${newValue === "NULL" ? "" : newValue}'
-       WHERE task_id = ${taskID};`;
+    if (fieldName === "task_scheduled_dt" && newValue === "NULL") {
+      qry = `UPDATE tasks 
+        SET ${fieldName} = NULL
+        WHERE task_id = ${taskID};`;
+    } else {
+      qry = `UPDATE tasks 
+        SET ${fieldName} = '${newValue === "NULL" ? "" : newValue}'
+        WHERE task_id = ${taskID};`;
+    }
   }
 
   return qry;
