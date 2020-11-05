@@ -1,4 +1,4 @@
-module.exports = [
+const mockTaskData = [
   {
     task_id: 60,
     task_creation_dt: "2020-10-08T21:31:58.724Z",
@@ -46,3 +46,5 @@ module.exports = [
     priority_desc: "Low",
   },
 ];
+
+export default mockTaskData;

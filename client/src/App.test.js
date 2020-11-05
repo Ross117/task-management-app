@@ -232,12 +232,13 @@ describe("the App component", () => {
 
           const checkTaskStateOrder = (value, sortedArr) => {
             const sortBy = app().find(SortBy);
-            sortBy.find(".sortBy__select").simulate("change", {
+            sortBy.find(".sortBy__dropdown").simulate("change", {
               target: {
                 value: value,
               },
             });
             const newState = app().state().tasks;
+            
             expect(newState).toEqual(sortedArr);
           };
 
@@ -257,13 +258,18 @@ describe("the App component", () => {
             describe("if one or more Scheduled Dates have null values", () => {
               test("they are placed at the end of App.tasks state", () => {
                 const state = app().state().tasks;
-                const stateWithNulls = state.map(val, (ind) => {
-                  if (ind % 2 === 0) {
-                    val.task_scheduled_dt = null;
+                // take copy of mock tasks instead? (cleaner?)
+                const stateWithNulls = state.map((val, ind) => {
+                  if (ind % 2 !== 0) {
+                    const newTask = JSON.parse(JSON.stringify(val));
+                    newTask.task_scheduled_dt = null;
+                    return newTask
                   }
                   return val;
                 });
+
                 app().setState({ tasks: stateWithNulls });
+
                 const sortedArr = [
                   stateWithNulls[3],
                   stateWithNulls[0],
@@ -279,8 +285,9 @@ describe("the App component", () => {
               test("The order of App.tasks state is unchanged", () => {
                 const state = app().state().tasks;
                 const stateAllNulls = state.map((val) => {
-                  val.task_scheduled_dt = null;
-                  return val;
+                  const newTask = JSON.parse(JSON.stringify(val));
+                  newTask.task_scheduled_dt = null;
+                  return newTask
                 });
                 app().setState({ tasks: stateAllNulls });
                 checkTaskStateOrder(
@@ -301,15 +308,18 @@ describe("the App component", () => {
                 state[3],
                 state[2],
               ];
+              
               checkTaskStateOrder("Scheduled Date (Descending)", sortedArr);
             });
 
             describe("if one or more Scheduled Dates have null values", () => {
               test("they are placed at the end of App.tasks state", () => {
                 const state = app().state().tasks;
-                const stateWithNulls = state.map(val, (ind) => {
-                  if (ind % 2 === 0) {
-                    val.task_scheduled_dt = null;
+                const stateWithNulls = state.map((val, ind) => {
+                  if (ind % 2 !== 0) {
+                    const newTask = JSON.parse(JSON.stringify(val));
+                    newTask.task_scheduled_dt = null;
+                    return newTask
                   }
                   return val;
                 });
@@ -329,8 +339,9 @@ describe("the App component", () => {
               test("The order of App.tasks state is unchanged", () => {
                 const state = app().state().tasks;
                 const stateAllNulls = state.map((val) => {
-                  val.task_scheduled_dt = null;
-                  return val;
+                  const newTask = JSON.parse(JSON.stringify(val));
+                  newTask.task_scheduled_dt = null;
+                  return newTask
                 });
                 app().setState({ tasks: stateAllNulls });
                 checkTaskStateOrder(

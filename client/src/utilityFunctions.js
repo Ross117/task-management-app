@@ -11,4 +11,12 @@ const encodeUpdateValue = (updateValue) => {
   return encodedStr;
 };
 
-export default encodeUpdateValue;
+const convertToNumber = (string) => {
+  if (string === null) return;
+
+  const convertedNum = Number(string.replace(/[^0-9]/g, ""));
+
+  return convertedNum;
+};
+
+export { encodeUpdateValue, convertToNumber };

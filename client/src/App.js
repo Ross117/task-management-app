@@ -3,7 +3,7 @@ import Task from "./components/Task";
 import NewTaskForm from "./components/NewTaskForm";
 import SortBy from "./components/SortBy";
 import "./css/App.css";
-import encodeUpdateValue from "./utilityFunctions";
+import { encodeUpdateValue, convertToNumber } from "./utilityFunctions";
 
 class App extends Component {
   constructor(props) {
@@ -21,7 +21,7 @@ class App extends Component {
     this.handleNewTaskChange = this.handleNewTaskChange.bind(this);
     this.postNewTask = this.postNewTask.bind(this);
     this.deleteTask = this.deleteTask.bind(this);
-    this.reorderTasks = this.reorderTasks.bind(this);
+    this.sortTasks = this.sortTasks.bind(this);
   }
 
   async getAllTasks() {
@@ -120,8 +120,30 @@ class App extends Component {
     this.getAllTasks();
   }
 
-  reorderTasks(order) {
-    return order;
+  sortTasks(order) {
+    const reorderedTasks = this.state.tasks
+      .map((val) => {
+        return val;
+      })
+      .sort((a, b) => {
+        if (order === "Scheduled Date (Ascending)") {
+          return (
+            convertToNumber(a.task_scheduled_dt) -
+            convertToNumber(b.task_scheduled_dt)
+          );
+        }
+
+        if (order === "Scheduled Date (Descending)") {
+          return (
+            convertToNumber(b.task_scheduled_dt) -
+            convertToNumber(a.task_scheduled_dt)
+          );
+        }
+
+        return 0;
+      });
+
+    this.setState({ tasks: reorderedTasks });
   }
 
   componentDidMount() {
@@ -161,7 +183,7 @@ class App extends Component {
             handleNewTaskChange={this.handleNewTaskChange}
             postNewTask={this.postNewTask}
           />
-          <SortBy reorderTasks={this.reorderTasks} />
+          <SortBy sortTasks={this.sortTasks} />
           {tasks}
         </section>
       );

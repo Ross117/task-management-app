@@ -1,17 +1,11 @@
 import React, { Component } from "react";
 import "../css/SortBy.css";
 
-// now: scheduled date (oldest - newest)
+// need a way of returning to default order
 
-// later: created date (oldest - newest)
+// later: created date (oldest - newest) 
 
-// Will need to handle null values - no change if all values are null, if some are null then place these at the bottom regardless of asc or desc
-
-// shouldn't render when there are no tasks (later: what about if no due dates?)
-
-// I think the component should have state - to store which option user has selected
-
-// User option change will fire function which reorders app state
+// shouldn't render when there are no tasks? (later: what about if no due dates?)
 
 // sort function should be declared in App module & passed as prop? or Declared in SortBy? - I think former because it'll amend (by reordering) App state
 
@@ -30,20 +24,20 @@ class SortBy extends Component {
   onChange(e) {
     const newValue = e.target.value;
     this.setState({ selected: newValue });
-    this.props.reorderTasks(newValue);
+    this.props.sortTasks(newValue);
   }
 
   render() {
     return (
       <div className="sortBy">
         <label className="sortBy__label">
-          Sort By
+          Sort By:
           <select
             className="sortBy__dropdown"
             value={this.state.selected}
             onChange={this.onChange}
           >
-            <option></option>
+            <option>Select</option>
             <option>Scheduled Date (Ascending)</option>
             <option>Scheduled Date (Descending)</option>
           </select>
