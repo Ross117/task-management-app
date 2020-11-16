@@ -12,7 +12,7 @@ const encodeUpdateValue = (updateValue) => {
 };
 
 const convertToNumber = (string) => {
-  if (string === null) return;
+  if (string === null) return null;
 
   const convertedNum = Number(string.replace(/[^0-9]/g, ""));
 

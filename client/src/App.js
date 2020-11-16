@@ -45,8 +45,17 @@ class App extends Component {
     const fieldToUpdate = e.target.name;
     let updateValue;
 
-    updateValue =
-      fieldToUpdate === "task_completed" ? e.target.checked : e.target.value;
+    if (fieldToUpdate === "task_completed") {
+      updateValue = e.target.checked;
+    } else if (fieldToUpdate === "task_scheduled_dt") {
+      if (e.target.value !== "") {
+        updateValue = e.target.value + "T00:00:00.000Z";
+      } else {
+        updateValue = null;
+      }
+    } else {
+      updateValue = e.target.value;
+    }
 
     const updatedTaskState = this.state.tasks.map((task) => {
       const updateTask = (task) => {
@@ -120,24 +129,44 @@ class App extends Component {
     this.getAllTasks();
   }
 
-  sortTasks(order) {
+  sortTasks(selectValue) {
+    const { fieldName, order } = selectValue;
+
+    const allNulls = this.state.tasks.every((val) => {
+      return val[fieldName] === null;
+    });
+
+    if (allNulls) return;
+
     const reorderedTasks = this.state.tasks
       .map((val) => {
         return val;
       })
       .sort((a, b) => {
-        if (order === "Scheduled Date (Ascending)") {
+        const firstVal = convertToNumber(a[fieldName]);
+        const secondVal = convertToNumber(b[fieldName]);
+
+        if (firstVal === null && secondVal === null) {
           return (
-            convertToNumber(a.task_scheduled_dt) -
-            convertToNumber(b.task_scheduled_dt)
+            convertToNumber(b.task_creation_dt) -
+            convertToNumber(a.task_creation_dt)
           );
         }
 
-        if (order === "Scheduled Date (Descending)") {
-          return (
-            convertToNumber(b.task_scheduled_dt) -
-            convertToNumber(a.task_scheduled_dt)
-          );
+        if (firstVal === null) {
+          return 1;
+        }
+
+        if (secondVal === null) {
+          return -1;
+        }
+
+        if (order === "Ascending") {
+          return firstVal - secondVal;
+        }
+
+        if (order === "Descending") {
+          return secondVal - firstVal;
         }
 
         return 0;
@@ -183,7 +212,7 @@ class App extends Component {
             handleNewTaskChange={this.handleNewTaskChange}
             postNewTask={this.postNewTask}
           />
-          <SortBy sortTasks={this.sortTasks} />
+          {tasks.length > 0 ? <SortBy sortTasks={this.sortTasks} /> : null}
           {tasks}
         </section>
       );

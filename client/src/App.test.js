@@ -130,7 +130,6 @@ describe("the App component", () => {
           expect(tasks.length).toBe(app().state("tasks").length);
         });
 
-        // only render if there's something to sort, e.g. scheduled date?
         test("a Sort By component is rendered", () => {
           const sortBy = app().find(SortBy);
           expect(sortBy.length).toBe(1);
@@ -153,6 +152,7 @@ describe("the App component", () => {
           const checkAppStateIsUpdated = (update, selector, name) => {
             const task = app().find(Task).first();
             const taskID = app().state().tasks[0].task_id;
+
             name === "task_completed"
               ? task.find(selector).simulate("change", {
                   target: {
@@ -168,14 +168,20 @@ describe("the App component", () => {
                     parentNode: { id: taskID },
                   },
                 });
+
             const state = app().state().tasks[0];
+
+            if (name === "task_scheduled_dt") {
+              update = update + "T00:00:00.000Z";
+            }
+
             expect(state[name]).toBe(update);
           };
 
           describe("when the user updates the value of the Task Scheduled Date input element", () => {
             test("App state is updated accordingly", () => {
               checkAppStateIsUpdated(
-                "2020-05-05T01:00:00.000Z",
+                "2020-05-05",
                 ".task__scheduledDt",
                 "task_scheduled_dt"
               );
@@ -237,8 +243,9 @@ describe("the App component", () => {
                 value: value,
               },
             });
+            sortBy.find(".sortBy__button").simulate("click");
             const newState = app().state().tasks;
-            
+
             expect(newState).toEqual(sortedArr);
           };
 
@@ -258,12 +265,11 @@ describe("the App component", () => {
             describe("if one or more Scheduled Dates have null values", () => {
               test("they are placed at the end of App.tasks state", () => {
                 const state = app().state().tasks;
-                // take copy of mock tasks instead? (cleaner?)
                 const stateWithNulls = state.map((val, ind) => {
                   if (ind % 2 !== 0) {
                     const newTask = JSON.parse(JSON.stringify(val));
                     newTask.task_scheduled_dt = null;
-                    return newTask
+                    return newTask;
                   }
                   return val;
                 });
@@ -271,12 +277,13 @@ describe("the App component", () => {
                 app().setState({ tasks: stateWithNulls });
 
                 const sortedArr = [
-                  stateWithNulls[3],
-                  stateWithNulls[0],
-                  stateWithNulls[1],
                   stateWithNulls[2],
+                  stateWithNulls[0],
                   stateWithNulls[4],
+                  stateWithNulls[1],
+                  stateWithNulls[3],
                 ];
+
                 checkTaskStateOrder("Scheduled Date (Ascending)", sortedArr);
               });
             });
@@ -287,7 +294,7 @@ describe("the App component", () => {
                 const stateAllNulls = state.map((val) => {
                   const newTask = JSON.parse(JSON.stringify(val));
                   newTask.task_scheduled_dt = null;
-                  return newTask
+                  return newTask;
                 });
                 app().setState({ tasks: stateAllNulls });
                 checkTaskStateOrder(
@@ -308,7 +315,7 @@ describe("the App component", () => {
                 state[3],
                 state[2],
               ];
-              
+
               checkTaskStateOrder("Scheduled Date (Descending)", sortedArr);
             });
 
@@ -319,17 +326,17 @@ describe("the App component", () => {
                   if (ind % 2 !== 0) {
                     const newTask = JSON.parse(JSON.stringify(val));
                     newTask.task_scheduled_dt = null;
-                    return newTask
+                    return newTask;
                   }
                   return val;
                 });
                 app().setState({ tasks: stateWithNulls });
                 const sortedArr = [
-                  stateWithNulls[1],
-                  stateWithNulls[0],
-                  stateWithNulls[3],
-                  stateWithNulls[2],
                   stateWithNulls[4],
+                  stateWithNulls[0],
+                  stateWithNulls[2],
+                  stateWithNulls[1],
+                  stateWithNulls[3],
                 ];
                 checkTaskStateOrder("Scheduled Date (Descending)", sortedArr);
               });
@@ -341,7 +348,7 @@ describe("the App component", () => {
                 const stateAllNulls = state.map((val) => {
                   const newTask = JSON.parse(JSON.stringify(val));
                   newTask.task_scheduled_dt = null;
-                  return newTask
+                  return newTask;
                 });
                 app().setState({ tasks: stateAllNulls });
                 checkTaskStateOrder(
