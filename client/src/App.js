@@ -12,6 +12,10 @@ class App extends Component {
       error: null,
       isFetched: false,
       tasks: [],
+      taskOrder: {
+        field: "task_creation_dt",
+        direction: "Descending",
+      },
       newTaskTitle: "",
     };
 
@@ -25,7 +29,8 @@ class App extends Component {
   }
 
   async getAllTasks() {
-    const res = await fetch("/allTasks");
+    const { field, direction } = this.state.taskOrder;
+    const res = await fetch(`/allTasks/${field}/${direction}`);
     try {
       const data = await res.json();
       this.setState({
@@ -90,7 +95,7 @@ class App extends Component {
       updateValue = encodeUpdateValue(updateValue);
     }
 
-    if (updateValue === "") updateValue = "NULL";
+    if (updateValue === "") updateValue = "null";
 
     fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
       method: "PUT",
@@ -130,10 +135,10 @@ class App extends Component {
   }
 
   sortTasks(selectValue) {
-    const { fieldName, order } = selectValue;
+    const { field, direction } = selectValue;
 
     const allNulls = this.state.tasks.every((val) => {
-      return val[fieldName] === null;
+      return val[field] === null;
     });
 
     if (allNulls) return;
@@ -143,8 +148,8 @@ class App extends Component {
         return val;
       })
       .sort((a, b) => {
-        const firstVal = convertToNumber(a[fieldName]);
-        const secondVal = convertToNumber(b[fieldName]);
+        const firstVal = convertToNumber(a[field]);
+        const secondVal = convertToNumber(b[field]);
 
         if (firstVal === null && secondVal === null) {
           return (
@@ -161,18 +166,24 @@ class App extends Component {
           return -1;
         }
 
-        if (order === "Ascending") {
+        if (direction === "Ascending") {
           return firstVal - secondVal;
         }
 
-        if (order === "Descending") {
+        if (direction === "Descending") {
           return secondVal - firstVal;
         }
 
         return 0;
       });
 
-    this.setState({ tasks: reorderedTasks });
+    this.setState({
+      tasks: reorderedTasks,
+      taskOrder: {
+        field,
+        direction,
+      },
+    });
   }
 
   componentDidMount() {

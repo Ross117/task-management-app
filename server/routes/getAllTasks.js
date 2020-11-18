@@ -1,8 +1,14 @@
 const dbConnection = require("../dbConnection/dbConnection.js");
 
-module.exports = (res) => {
-  const qry = 
-    `SELECT task_id, 
+module.exports = (req, res) => {
+  const { orderByField } = req.params;
+  const direction = req.params.direction === "Descending" ? "DESC" : "ASC";
+  const orderBy =
+    orderByField === "task_creation_dt"
+      ? `${orderByField} ${direction}`
+      : `${orderByField} ${direction} NULLS LAST, task_creation_dt DESC`;
+
+  const qry = `SELECT task_id, 
             task_creation_dt, 
             task_title, 
             task_desc, 
@@ -11,7 +17,7 @@ module.exports = (res) => {
             priority_desc 
      FROM tasks 
      LEFT JOIN task_priorities ON tasks.priority_id = task_priorities.priority_id 
-     ORDER BY task_id DESC;`;
+     ORDER BY ${orderBy};`;
 
   const client = dbConnection();
 
