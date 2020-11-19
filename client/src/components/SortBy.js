@@ -17,12 +17,10 @@ import "../css/SortBy.css";
 // how should nulls be ordered among themselves when there're both null & non-null values?
 // ### they should now be in task creation date descending order as a default
 
+// when adding a new task or deleted a task, sort auto reverts to Created Date (Desc)
+// ### should be fixed now
 
 // ############### to do
-
-// when adding a new task or deleted a task, sort auto reverts to Created Date (Desc)
-// do I need to call the this.props.sortTasks on a component lifecycle method?
-// add 'Order' property to app state & use it to sort tasks when re-fetching tasks?
 
 // finish styling button
 
@@ -45,7 +43,9 @@ class SortBy extends Component {
       "Scheduled Date": "task_scheduled_dt",
     };
 
-    const field = selectValue.substring(0, selectValue.indexOf("(")).trim();
+    const orderByField = selectValue
+      .substring(0, selectValue.indexOf("("))
+      .trim();
 
     const direction = selectValue.substring(
       selectValue.indexOf("(") + 1,
@@ -53,7 +53,7 @@ class SortBy extends Component {
     );
 
     return {
-      field: lookup[field],
+      orderByField: lookup[orderByField],
       direction,
     };
   }

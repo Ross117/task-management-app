@@ -7,11 +7,11 @@ const amendTask = require("./routes/amendTask.js");
 const deleteTask = require("./routes/deleteTask.js");
 const port = process.env.PORT;
 
-app.get("/allTasks/:orderByField/:direction", (req, res) => {
+app.get("/allTasks/:orderByField/:direction/:newTask", (req, res) => {
   getAllTasks(req, res);
 });
 
-app.put("/amendTask/:taskID/field/:fieldName/value/:newValue", (req, res) => {
+app.put("/amendTask/:taskID/:fieldName/:newValue", (req, res) => {
   amendTask(req, res);
 });
 

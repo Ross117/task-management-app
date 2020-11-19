@@ -13,7 +13,7 @@ class App extends Component {
       isFetched: false,
       tasks: [],
       taskOrder: {
-        field: "task_creation_dt",
+        orderByField: "task_creation_dt",
         direction: "Descending",
       },
       newTaskTitle: "",
@@ -28,9 +28,11 @@ class App extends Component {
     this.sortTasks = this.sortTasks.bind(this);
   }
 
-  async getAllTasks() {
-    const { field, direction } = this.state.taskOrder;
-    const res = await fetch(`/allTasks/${field}/${direction}`);
+  async getAllTasks(newTask) {
+    const { orderByField, direction } = this.state.taskOrder;
+    const res = await fetch(
+      `/allTasks/${orderByField}/${direction}/${newTask}`
+    );
     try {
       const data = await res.json();
       this.setState({
@@ -97,7 +99,7 @@ class App extends Component {
 
     if (updateValue === "") updateValue = "null";
 
-    fetch(`/amendTask/${taskID}/field/${fieldToUpdate}/value/${updateValue}`, {
+    fetch(`/amendTask/${taskID}/${fieldToUpdate}/${updateValue}`, {
       method: "PUT",
     });
   }
@@ -111,7 +113,7 @@ class App extends Component {
       await fetch(`/deleteTask/${taskID}`, {
         method: "DELETE",
       });
-      this.getAllTasks();
+      this.getAllTasks(false);
     }
   }
 
@@ -131,14 +133,14 @@ class App extends Component {
     });
 
     this.setState({ newTaskTitle: "" });
-    this.getAllTasks();
+    this.getAllTasks(true);
   }
 
   sortTasks(selectValue) {
-    const { field, direction } = selectValue;
+    const { orderByField, direction } = selectValue;
 
     const allNulls = this.state.tasks.every((val) => {
-      return val[field] === null;
+      return val[orderByField] === null;
     });
 
     if (allNulls) return;
@@ -148,8 +150,8 @@ class App extends Component {
         return val;
       })
       .sort((a, b) => {
-        const firstVal = convertToNumber(a[field]);
-        const secondVal = convertToNumber(b[field]);
+        const firstVal = convertToNumber(a[orderByField]);
+        const secondVal = convertToNumber(b[orderByField]);
 
         if (firstVal === null && secondVal === null) {
           return (
@@ -180,14 +182,14 @@ class App extends Component {
     this.setState({
       tasks: reorderedTasks,
       taskOrder: {
-        field,
+        orderByField,
         direction,
       },
     });
   }
 
   componentDidMount() {
-    this.getAllTasks();
+    this.getAllTasks(false);
   }
 
   render() {
