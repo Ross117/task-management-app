@@ -11,6 +11,7 @@ $colour-blue-dark: rgb(26, 70, 121);
   background-color: $colour-blue;
   border: none;
   border-radius: 0.5rem;
+  outline: none;
 
   &:hover {
     background-color: $colour-blue-dark;

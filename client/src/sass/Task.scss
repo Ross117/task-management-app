@@ -25,6 +25,7 @@ $colour-red: rgb(220, 88, 88);
 
   input, select {
     display: block;
+    outline: none;
   }
 
   .task__title {

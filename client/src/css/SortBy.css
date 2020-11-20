@@ -7,10 +7,16 @@
   .sortBy .sortBy__dropdown {
     margin: 1rem 0 1rem 1rem;
     font-size: 1.5rem;
-    padding: 0.2rem; }
+    padding: 0.2rem;
+    outline: none; }
   .sortBy .sortBy__button {
+    width: 6rem;
     margin-left: 1rem;
     font-size: 1.5rem;
-    padding: 0.5rem;
+    padding: 0.6rem;
+    background-color: #2f83e4;
+    border: none;
     border-radius: 0.5rem;
-    width: 6rem; }
+    outline: none; }
+    .sortBy .sortBy__button:hover {
+      background-color: #1a4679; }

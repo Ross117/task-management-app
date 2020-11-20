@@ -13,7 +13,8 @@
   .task:hover {
     box-shadow: -0.5rem 0.5rem 0.8rem 0 #343a40; }
   .task input, .task select {
-    display: block; }
+    display: block;
+    outline: none; }
   .task .task__title {
     font-size: 1.75rem;
     border: none;

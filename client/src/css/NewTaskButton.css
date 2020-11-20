@@ -7,6 +7,7 @@
   font-size: 1.5rem;
   background-color: #2f83e4;
   border: none;
-  border-radius: 0.5rem; }
+  border-radius: 0.5rem;
+  outline: none; }
   .newTaskButton:hover {
     background-color: #1a4679; }
