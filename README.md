@@ -8,4 +8,4 @@ The tasks which you add and the updates which you make to them are stored in a P
 
 The Node.js backend uses Express.js and routes requests from the client to the database also hosted on Heroku. Data is fetched, added, updated and deleted using SQL queries.
 
-I'm currently working on adding some sort functionality to the front end, so that you can re-order the tasks depending on the scheduled date.
+I've recently added sort functionality to the front end, so that you can now re-order the tasks depending on the created or scheduled date of the tasks.
