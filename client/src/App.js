@@ -110,10 +110,12 @@ class App extends Component {
     );
 
     if (response) {
-      await fetch(`/deleteTask/${taskID}`, {
+      const res = await fetch(`/deleteTask/${taskID}`, {
         method: "DELETE",
       });
-      this.getAllTasks(false);
+      if (res.status === 200) {
+        this.getAllTasks(false);
+      } 
     }
   }
 
@@ -128,12 +130,14 @@ class App extends Component {
 
     if (newTaskTitle === "") return;
 
-    await fetch(`/addTask/${newTaskTitle}`, {
+    const res = await fetch(`/addTask/${newTaskTitle}`, {
       method: "POST",
     });
 
-    this.setState({ newTaskTitle: "" });
-    this.getAllTasks(true);
+    if (res.status === 200) {
+      this.setState({ newTaskTitle: "" });
+      this.getAllTasks(true);
+    }
   }
 
   sortTasks(selectValue) {
