@@ -1,29 +1,6 @@
 import React, { Component } from "react";
 import "../css/SortBy.css";
 
-// sort function should be declared in App module & passed as prop? or Declared in SortBy? - I think former because it'll amend (by reordering) App state
-// If function is declared in SortBy, can it change state in App?
-
-// ############## done
-
-// when scheduled date is added or removed, and then user attempts to sort immediately after,
-// the change doesn't seem to be picked up
-// - if it's the same select value, onSelectChange won't fire
-// ### added sort button to fix this, just needs styling
-
-// - if it's not the same value, it's because the date is missing trailing zeros (due to state being updated locally & not from the db)
-// ### should be fixed now
-
-// how should nulls be ordered among themselves when there're both null & non-null values?
-// ### they should now be in task creation date descending order as a default
-
-// when adding a new task or deleted a task, sort auto reverts to Created Date (Desc)
-// ### should be fixed now
-
-// ############### to do
-
-// finish styling button
-
 class SortBy extends Component {
   constructor(props) {
     super();
