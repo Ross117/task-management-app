@@ -20,14 +20,8 @@ class SortBy extends Component {
       "Scheduled Date": "task_scheduled_dt",
     };
 
-    const orderByField = selectValue
-      .substring(0, selectValue.indexOf("("))
-      .trim();
-
-    const direction = selectValue.substring(
-      selectValue.indexOf("(") + 1,
-      selectValue.indexOf(")")
-    );
+    const orderByField = selectValue.split("(")[0].trim();
+    const direction = selectValue.split("(")[1].replace(/[)]/, "");
 
     return {
       orderByField: lookup[orderByField],
