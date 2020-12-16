@@ -9,6 +9,8 @@
   border-radius: 1rem;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 #c1ccc6;
   background-color: white; }
+  .newTaskForm:hover {
+    box-shadow: -0.5rem 0.5rem 0.8rem 0 #343a40; }
   .newTaskForm .newTaskForm__titleInput {
     width: 70%;
     font-size: 1.75rem;
