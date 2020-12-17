@@ -23,7 +23,11 @@ body {
   box-sizing: border-box;
   font-family: 'Roboto', Verdana, sans-serif;
   color: $colour-grey-dark;
-  background-color: $colour-white-smoke
+  background-color: $colour-white-smoke;
+
+  input, select, textarea, button {
+    font-family: inherit;
+  }
 }
 
 h1 {
