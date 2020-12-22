@@ -1,5 +1,6 @@
 $colour-cream: rgb(242, 242, 242);
 $colour-grey-light: rgb(193, 204, 198);
+$colour-grey: rgb(204, 204, 204);
 $colour-grey-dark: rgb(52, 58, 64);
 $colour-white: rgb(255, 255, 255);
 
@@ -10,7 +11,7 @@ $colour-white: rgb(255, 255, 255);
   margin-top: 1rem;
   margin-bottom: 2rem;
   padding: 1.5rem;
-  border: 0.2rem solid $colour-cream;
+  border: 0.1rem solid $colour-grey;
   border-radius: 1rem;
   box-shadow: -0.5rem 0.5rem 0.8rem 0 $colour-grey-light;
   background-color: $colour-white;
