@@ -11,7 +11,7 @@
   .task:last-child {
     margin-bottom: 1rem; }
   .task:hover {
-    box-shadow: -0.5rem 0.5rem 0.8rem 0 #343a40; }
+    box-shadow: -0.5rem 0.5rem 0.8rem 0 #1e1e1e; }
   .task input, .task select {
     display: block;
     outline: none; }
@@ -54,7 +54,8 @@
     appearance: none;
     font-size: 1.25rem;
     font-weight: bold;
-    background-color: #dc5858; }
+    background-color: #f28b82;
+    color: #1e1e1e; }
   .task .task__scheduledDt {
     border: none;
     padding: 0.5rem; }

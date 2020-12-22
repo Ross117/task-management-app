@@ -1,7 +1,10 @@
+$colour-grey-dark: rgb(30, 30, 30);
+
 .deleteTaskButton {
   position: absolute;
   margin-left: 2rem;
   background-color: white;
+  color: $colour-grey-dark;
   border: none;
   font-size: 1.5rem;
   left: 15rem;

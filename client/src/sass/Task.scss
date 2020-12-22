@@ -1,9 +1,8 @@
-$colour-cream: rgb(242, 242, 242);
 $colour-grey-light: rgb(193, 204, 198);
 $colour-grey: rgb(204, 204, 204);
-$colour-grey-dark: rgb(52, 58, 64);
+$colour-grey-dark: rgb(30, 30, 30);
 $colour-white: rgb(255, 255, 255);
-$colour-red: rgb(220, 88, 88);
+$colour-red: rgb(242, 139, 130);
 
 .task {
   position: relative;
@@ -73,6 +72,7 @@ $colour-red: rgb(220, 88, 88);
   .task__priority--high {
     @include select_priority; 
     background-color: $colour-red;
+    color: $colour-grey-dark;
   }
 
   .task__scheduledDt {

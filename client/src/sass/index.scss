@@ -1,4 +1,4 @@
-$colour-grey-dark: rgb(52, 58, 64);
+$colour-grey-dark: rgb(30, 30, 30);
 $colour-white-smoke: rgb(245, 245, 245);
 
 *,
@@ -25,8 +25,14 @@ body {
   color: $colour-grey-dark;
   background-color: $colour-white-smoke;
 
-  input, select, textarea, button {
+  input, select, textarea {
     font-family: inherit;
+    color: inherit;
+  }
+
+  button {
+    font-family: inherit;
+    color: $colour-grey-dark;
   }
 }
 
