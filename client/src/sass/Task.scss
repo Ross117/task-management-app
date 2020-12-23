@@ -53,6 +53,12 @@ $colour-red: rgb(242, 139, 130);
     width: 1.5rem;
   }
 
+  @supports (-moz-appearance:meterbar) {
+    .task__completed {
+      height: 1rem;
+    }    
+  }
+
   @mixin select_priority {
     position: absolute;
     right: 1rem;

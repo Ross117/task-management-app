@@ -34,6 +34,9 @@
     right: 1rem;
     height: 1.5rem;
     width: 1.5rem; }
+  @supports (-moz-appearance: meterbar) {
+    .task .task__completed {
+      height: 1rem; } }
   .task .task__priority {
     position: absolute;
     right: 1rem;
