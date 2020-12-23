@@ -76,7 +76,9 @@ $colour-red: rgb(242, 139, 130);
   }
 
   .task__scheduledDt {
-    border: none;
+    max-width: 12rem;
+    border: 0.1rem solid $colour-grey-light;
+    border-radius: 0.5rem;
     padding: 0.5rem;
   }
 }

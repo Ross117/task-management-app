@@ -57,5 +57,7 @@
     background-color: #f28b82;
     color: #1e1e1e; }
   .task .task__scheduledDt {
-    border: none;
+    max-width: 12rem;
+    border: 0.1rem solid #c1ccc6;
+    border-radius: 0.5rem;
     padding: 0.5rem; }
