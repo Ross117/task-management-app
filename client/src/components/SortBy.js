@@ -57,7 +57,11 @@ class SortBy extends Component {
             <option>Scheduled Date (Ascending)</option>
           </select>
         </label>
-        <button className="sortBy__button" onClick={this.onButtonClick}>
+        <button
+          className="sortBy__button"
+          type="button"
+          onClick={this.onButtonClick}
+        >
           Sort
         </button>
       </div>
